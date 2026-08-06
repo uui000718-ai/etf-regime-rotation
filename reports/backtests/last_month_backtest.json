@@ -1,0 +1,415 @@
+{
+  "generated_at": "2026-08-06T12:47:57+00:00",
+  "strategy": "etf-regime-rotation-v2",
+  "assumptions": {
+    "lookback_days": 30,
+    "rebalance": "weekly",
+    "execution": "signals are generated after close and executed at next available close",
+    "cash_return": "0%",
+    "transaction_cost_bps_per_turnover": 5.0
+  },
+  "period": {
+    "start": "2026-07-08",
+    "end": "2026-08-06",
+    "trading_points": 22
+  },
+  "metrics": {
+    "total_return_pct": 0.2,
+    "max_drawdown_pct": -5.1,
+    "annualized_volatility_pct": 20.82,
+    "transaction_cost_pct": 0.1783,
+    "rebalance_count": 5
+  },
+  "benchmarks": {
+    "cn_equal_weight_universe_pct": 0.35,
+    "nasdaq_core_equal_weight_pct": 0.84
+  },
+  "latest_targets": [
+    {
+      "symbol": "QQQM",
+      "name": "Invesco NASDAQ 100 ETF",
+      "market": "us",
+      "target_weight_pct": 30
+    },
+    {
+      "symbol": "CASH",
+      "name": "现金/货币基金",
+      "market": "cash",
+      "target_weight_pct": 70
+    }
+  ],
+  "trade_log": [
+    {
+      "signal_date": "2026-07-07",
+      "trade_date": "2026-07-08",
+      "turnover_pct": 84.99,
+      "cost_pct": 0.0425,
+      "regime": {
+        "mode": "defensive",
+        "label": "防守",
+        "average_score": 51.8,
+        "buy_count": 3,
+        "sell_count": 29,
+        "usable_count": 53
+      },
+      "targets": [
+        {
+          "symbol": "159985",
+          "name": "豆粕ETF华夏",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "159667",
+          "name": "工业母机ETF国泰",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "512880",
+          "name": "证券ETF国泰",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "QQQM",
+          "name": "Invesco NASDAQ 100 ETF",
+          "market": "us",
+          "target_weight_pct": 30
+        },
+        {
+          "symbol": "CASH",
+          "name": "现金/货币基金",
+          "market": "cash",
+          "target_weight_pct": 15.01
+        }
+      ],
+      "cn_buys": [
+        {
+          "symbol": "159985",
+          "name": "豆粕ETF华夏",
+          "score": 82.81
+        },
+        {
+          "symbol": "159667",
+          "name": "工业母机ETF国泰",
+          "score": 74.58
+        },
+        {
+          "symbol": "512880",
+          "name": "证券ETF国泰",
+          "score": 74.11
+        }
+      ]
+    },
+    {
+      "signal_date": "2026-07-13",
+      "trade_date": "2026-07-14",
+      "turnover_pct": 89.99,
+      "cost_pct": 0.045,
+      "regime": {
+        "mode": "defensive",
+        "label": "防守",
+        "average_score": 49.45,
+        "buy_count": 1,
+        "sell_count": 29,
+        "usable_count": 53
+      },
+      "targets": [
+        {
+          "symbol": "560660",
+          "name": "云计算50ETF新华",
+          "market": "cn",
+          "target_weight_pct": 35.0
+        },
+        {
+          "symbol": "QQQM",
+          "name": "Invesco NASDAQ 100 ETF",
+          "market": "us",
+          "target_weight_pct": 30
+        },
+        {
+          "symbol": "CASH",
+          "name": "现金/货币基金",
+          "market": "cash",
+          "target_weight_pct": 35.0
+        }
+      ],
+      "cn_buys": [
+        {
+          "symbol": "560660",
+          "name": "云计算50ETF新华",
+          "score": 75.3
+        }
+      ]
+    },
+    {
+      "signal_date": "2026-07-20",
+      "trade_date": "2026-07-21",
+      "turnover_pct": 89.99,
+      "cost_pct": 0.045,
+      "regime": {
+        "mode": "defensive",
+        "label": "防守",
+        "average_score": 50.34,
+        "buy_count": 3,
+        "sell_count": 27,
+        "usable_count": 53
+      },
+      "targets": [
+        {
+          "symbol": "560080",
+          "name": "中药ETF汇添富",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "159992",
+          "name": "创新药ETF银华",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "512890",
+          "name": "红利低波ETF华泰柏瑞",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "QQQM",
+          "name": "Invesco NASDAQ 100 ETF",
+          "market": "us",
+          "target_weight_pct": 30
+        },
+        {
+          "symbol": "CASH",
+          "name": "现金/货币基金",
+          "market": "cash",
+          "target_weight_pct": 15.01
+        }
+      ],
+      "cn_buys": [
+        {
+          "symbol": "560080",
+          "name": "中药ETF汇添富",
+          "score": 76.8
+        },
+        {
+          "symbol": "159992",
+          "name": "创新药ETF银华",
+          "score": 76.4
+        },
+        {
+          "symbol": "512890",
+          "name": "红利低波ETF华泰柏瑞",
+          "score": 72.0
+        }
+      ]
+    },
+    {
+      "signal_date": "2026-07-27",
+      "trade_date": "2026-07-28",
+      "turnover_pct": 36.66,
+      "cost_pct": 0.0183,
+      "regime": {
+        "mode": "defensive",
+        "label": "防守",
+        "average_score": 50.31,
+        "buy_count": 3,
+        "sell_count": 24,
+        "usable_count": 53
+      },
+      "targets": [
+        {
+          "symbol": "159985",
+          "name": "豆粕ETF华夏",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "560080",
+          "name": "中药ETF汇添富",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "159992",
+          "name": "创新药ETF银华",
+          "market": "cn",
+          "target_weight_pct": 18.33
+        },
+        {
+          "symbol": "QQQM",
+          "name": "Invesco NASDAQ 100 ETF",
+          "market": "us",
+          "target_weight_pct": 30
+        },
+        {
+          "symbol": "CASH",
+          "name": "现金/货币基金",
+          "market": "cash",
+          "target_weight_pct": 15.01
+        }
+      ],
+      "cn_buys": [
+        {
+          "symbol": "159985",
+          "name": "豆粕ETF华夏",
+          "score": 83.35
+        },
+        {
+          "symbol": "560080",
+          "name": "中药ETF汇添富",
+          "score": 76.35
+        },
+        {
+          "symbol": "159992",
+          "name": "创新药ETF银华",
+          "score": 72.98
+        }
+      ]
+    },
+    {
+      "signal_date": "2026-08-03",
+      "trade_date": "2026-08-04",
+      "turnover_pct": 54.99,
+      "cost_pct": 0.0275,
+      "regime": {
+        "mode": "defensive",
+        "label": "防守",
+        "average_score": 51.18,
+        "buy_count": 0,
+        "sell_count": 23,
+        "usable_count": 53
+      },
+      "targets": [
+        {
+          "symbol": "QQQM",
+          "name": "Invesco NASDAQ 100 ETF",
+          "market": "us",
+          "target_weight_pct": 30
+        },
+        {
+          "symbol": "CASH",
+          "name": "现金/货币基金",
+          "market": "cash",
+          "target_weight_pct": 70
+        }
+      ],
+      "cn_buys": []
+    }
+  ],
+  "equity_curve": [
+    {
+      "date": "2026-07-08",
+      "value": 0.999575,
+      "daily_return_pct": 0.0
+    },
+    {
+      "date": "2026-07-09",
+      "value": 1.011685,
+      "daily_return_pct": 1.2115
+    },
+    {
+      "date": "2026-07-10",
+      "value": 1.005421,
+      "daily_return_pct": -0.6191
+    },
+    {
+      "date": "2026-07-13",
+      "value": 0.989765,
+      "daily_return_pct": -1.5572
+    },
+    {
+      "date": "2026-07-14",
+      "value": 0.99991,
+      "daily_return_pct": 1.0705
+    },
+    {
+      "date": "2026-07-15",
+      "value": 0.993744,
+      "daily_return_pct": -0.6167
+    },
+    {
+      "date": "2026-07-16",
+      "value": 0.991247,
+      "daily_return_pct": -0.2512
+    },
+    {
+      "date": "2026-07-17",
+      "value": 0.960043,
+      "daily_return_pct": -3.148
+    },
+    {
+      "date": "2026-07-20",
+      "value": 0.974499,
+      "daily_return_pct": 1.5058
+    },
+    {
+      "date": "2026-07-21",
+      "value": 1.000658,
+      "daily_return_pct": 2.7306
+    },
+    {
+      "date": "2026-07-22",
+      "value": 1.000427,
+      "daily_return_pct": -0.0231
+    },
+    {
+      "date": "2026-07-23",
+      "value": 0.993656,
+      "daily_return_pct": -0.6768
+    },
+    {
+      "date": "2026-07-24",
+      "value": 0.975132,
+      "daily_return_pct": -1.8643
+    },
+    {
+      "date": "2026-07-27",
+      "value": 0.984872,
+      "daily_return_pct": 0.9989
+    },
+    {
+      "date": "2026-07-28",
+      "value": 0.977386,
+      "daily_return_pct": -0.7419
+    },
+    {
+      "date": "2026-07-29",
+      "value": 0.976925,
+      "daily_return_pct": -0.0472
+    },
+    {
+      "date": "2026-07-30",
+      "value": 0.979764,
+      "daily_return_pct": 0.2906
+    },
+    {
+      "date": "2026-07-31",
+      "value": 0.986128,
+      "daily_return_pct": 0.6495
+    },
+    {
+      "date": "2026-08-03",
+      "value": 0.988397,
+      "daily_return_pct": 0.2302
+    },
+    {
+      "date": "2026-08-04",
+      "value": 1.004693,
+      "daily_return_pct": 1.6767
+    },
+    {
+      "date": "2026-08-05",
+      "value": 1.001983,
+      "daily_return_pct": -0.2698
+    },
+    {
+      "date": "2026-08-06",
+      "value": 1.001983,
+      "daily_return_pct": 0.0
+    }
+  ],
+  "disclaimer": "Rule-based ETF research backtest. It is not investment advice."
+}

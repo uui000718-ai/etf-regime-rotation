@@ -31,6 +31,28 @@ function renderSummary(payload) {
   document.getElementById("sellCount").textContent = regime.sell_count ?? "--";
 }
 
+function renderPortfolio(payload) {
+  const container = document.getElementById("portfolio");
+  const targets = payload.portfolio?.targets || [];
+  if (!targets.length) {
+    container.innerHTML = `<div class="empty">暂无组合建议。</div>`;
+    return;
+  }
+  container.innerHTML = targets
+    .map(
+      (item) => `
+        <div class="portfolio-row">
+          <div>
+            <strong>${item.symbol}</strong>
+            <span>${item.name}</span>
+          </div>
+          <b>${formatNumber(item.target_weight_pct, "%")}</b>
+        </div>
+      `
+    )
+    .join("");
+}
+
 function signalCard(item) {
   const reasons = Array.isArray(item.reasons) ? item.reasons.slice(0, 2).join("；") : "";
   const warnings = Array.isArray(item.warnings) && item.warnings.length ? `风险：${item.warnings[0]}` : "";
@@ -38,7 +60,7 @@ function signalCard(item) {
     <article class="signal-card">
       <div class="signal-top">
         <div class="signal-name">
-          <span class="symbol">${item.market.toUpperCase()} · ${item.symbol} · ${item.theme}</span>
+          <span class="symbol">#${item.rank || "--"} · ${item.market.toUpperCase()} · ${item.symbol} · ${item.theme}</span>
           <span class="name">${item.name}</span>
         </div>
         <span class="badge ${item.status}">${statusText[item.status] || item.status}</span>
@@ -46,9 +68,9 @@ function signalCard(item) {
       <div class="score-row">
         <div class="mini"><span>总分</span><strong>${formatNumber(item.score)}</strong></div>
         <div class="mini"><span>20日</span><strong>${formatNumber(item.change_20d_pct, "%")}</strong></div>
-        <div class="mini"><span>60日</span><strong>${formatNumber(item.change_60d_pct, "%")}</strong></div>
+        <div class="mini"><span>量能比</span><strong>${formatNumber(item.volume_ratio)}</strong></div>
       </div>
-      <p class="reason">${reasons || "暂无理由"}${warnings ? `<br>${warnings}` : ""}</p>
+      <p class="reason">${reasons || "暂无理由"}${warnings ? `<br>${warnings}` : ""}<br>数据源：${item.provider || item.data_quality}</p>
     </article>
   `;
 }
@@ -73,6 +95,7 @@ async function loadData() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.payload = await response.json();
     renderSummary(state.payload);
+    renderPortfolio(state.payload);
     renderSignals();
   } catch (error) {
     container.innerHTML = `<div class="error">读取数据失败：${error.message}</div>`;

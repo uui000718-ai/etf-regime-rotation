@@ -63,12 +63,14 @@ SITE_URL=https://<github_user>.github.io/<repo>/
 
 代码不会保存或打印 SendKey。
 
+当前状态：通知代码已预留，但未配置仓库 Secret，不会发送每日推送。
+
 ## 数据源
 
 第一版免费数据源：
 
 - 美股 ETF：YFinance
-- A 股 ETF：AkShare
+- A 股 ETF：AkShare、东财直连 K 线、腾讯前复权 K 线
 
 预留扩展：
 
@@ -92,3 +94,9 @@ score = trend 30% + momentum 25% + flow 20% + risk 15% + event 10%
 - `sell`: 卖出/回避
 
 AI 后续只负责解释和反方检查，不直接生成买卖动作。
+
+策略来源说明见：
+
+```text
+docs/strategy_source_notes.md
+```

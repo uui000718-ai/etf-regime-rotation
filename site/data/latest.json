@@ -1,42 +1,72 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-08-06T10:11:44+00:00",
-  "strategy": "etf-regime-rotation-mvp",
+  "schema_version": 2,
+  "generated_at": "2026-08-06T11:21:48+00:00",
+  "strategy": "etf-regime-rotation-v2",
+  "strategy_sources": [
+    "a-stock-data: A股 ETF 前缀路由、东财限流与数据源 fallback",
+    "daily_stock_analysis: 资金确认不足时降级买入，靠近支撑时不机械卖出",
+    "tickflow-stock-panel: ETF 与个股策略池隔离、日线信号用于次日执行、回测需考虑 T+1/费用/滑点",
+    "TradingAgents-CN: 风险管理覆盖层，先看反方和保守情景再给组合动作"
+  ],
   "regime": {
     "mode": "defensive",
     "label": "防守",
-    "average_score": 56.36,
-    "buy_count": 1,
-    "sell_count": 3
+    "average_score": 55.92,
+    "buy_count": 4,
+    "sell_count": 20,
+    "usable_count": 53
   },
   "signals": [
     {
-      "symbol": "510880",
-      "name": "红利ETF",
+      "symbol": "512800",
+      "name": "银行ETF华宝",
       "market": "cn",
-      "theme": "红利",
-      "role": "defensive",
-      "status": "buy",
-      "score": 76.72,
-      "price": 3.288,
-      "change_20d_pct": 8.16,
-      "change_60d_pct": 1.36,
-      "scores": {
-        "trend": 100,
-        "momentum": 69.86,
-        "flow": 65,
-        "risk": 75,
-        "event": 50
-      },
+      "theme": "银行",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [],
       "reasons": [
         "综合评分进入买入候选区",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
+        "价格站上20日均线",
+        "价格站上60日均线",
         "长期趋势仍在",
-        "20 日动量为正：8.16%"
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
       ],
-      "warnings": [],
-      "data_quality": "real"
+      "status": "buy",
+      "score": 78.57,
+      "price": 0.81,
+      "change_1d_pct": 1.12,
+      "change_20d_pct": 6.44,
+      "change_60d_pct": 3.85,
+      "change_120d_pct": 3.98,
+      "volume_ratio": 1.09,
+      "turnover": null,
+      "max_drawdown_20d_pct": -4.64,
+      "max_drawdown_60d_pct": -9.83,
+      "volatility_20d_pct": 21.52,
+      "rsi_14": 57.78,
+      "distance_to_support_pct": 10.35,
+      "distance_to_resistance_pct": 3.7,
+      "scores": {
+        "trend": 100,
+        "momentum": 78.0,
+        "flow": 58.84,
+        "risk": 82.03,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 87.45,
+      "action_label": "买入候选",
+      "rank": 1
     },
     {
       "symbol": "QQQM",
@@ -44,55 +74,311 @@
       "market": "us",
       "theme": "Nasdaq 100",
       "role": "core",
+      "provider": "yfinance",
+      "source_errors": [],
+      "data_quality": "real",
+      "warnings": [
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-8.77%",
+        "买入结论缺少量能确认，降级为持有"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "成交量处于有效放大区间"
+      ],
       "status": "hold",
-      "score": 74.58,
+      "score": 77.6,
       "price": 295.35,
+      "change_1d_pct": -0.9,
       "change_20d_pct": 0.85,
       "change_60d_pct": 0.98,
+      "change_120d_pct": 17.3,
+      "volume_ratio": 1.14,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.77,
+      "max_drawdown_60d_pct": -11.2,
+      "volatility_20d_pct": 26.45,
+      "rsi_14": 54.06,
+      "distance_to_support_pct": 8.38,
+      "distance_to_resistance_pct": 3.9,
       "scores": {
         "trend": 100,
-        "momentum": 61.32,
-        "flow": 65,
-        "risk": 75,
-        "event": 50
+        "momentum": 81.31,
+        "flow": 49.6,
+        "risk": 82.34,
+        "event": 50.0
       },
-      "reasons": [
-        "趋势尚未破坏，维持持有",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
-        "长期趋势仍在",
-        "20 日动量为正：0.85%"
-      ],
-      "warnings": [],
-      "data_quality": "real"
+      "decision_stability": {
+        "applied": true,
+        "reason": "买入结论缺少量能确认，降级为持有"
+      },
+      "relative_rank": 100.0,
+      "action_label": "持有",
+      "rank": 1
     },
     {
-      "symbol": "512800",
-      "name": "银行ETF",
+      "symbol": "510650",
+      "name": "金融地产ETF华夏",
       "market": "cn",
-      "theme": "银行",
+      "theme": "金融/央企",
       "role": "sector",
-      "status": "hold",
-      "score": 72.86,
-      "price": 0.805,
-      "change_20d_pct": 5.78,
-      "change_60d_pct": 3.21,
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [],
+      "reasons": [
+        "综合评分进入买入候选区",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "buy",
+      "score": 75.94,
+      "price": 2.871,
+      "change_1d_pct": -0.28,
+      "change_20d_pct": 5.05,
+      "change_60d_pct": 3.46,
+      "change_120d_pct": -2.74,
+      "volume_ratio": 1.91,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.85,
+      "max_drawdown_60d_pct": -7.17,
+      "volatility_20d_pct": 18.92,
+      "rsi_14": 58.8,
+      "distance_to_support_pct": 8.63,
+      "distance_to_resistance_pct": 4.01,
+      "scores": {
+        "trend": 93.0,
+        "momentum": 72.15,
+        "flow": 62.76,
+        "risk": 83.01,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 81.08,
+      "action_label": "买入候选",
+      "rank": 2
+    },
+    {
+      "symbol": "515220",
+      "name": "煤炭ETF国泰",
+      "market": "cn",
+      "theme": "煤炭/资源",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-25.38%",
+        "年化波动率偏高：43.29%"
+      ],
+      "reasons": [
+        "综合评分进入买入候选区",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "成交量处于有效放大区间"
+      ],
+      "status": "buy",
+      "score": 75.44,
+      "price": 1.243,
+      "change_1d_pct": 5.88,
+      "change_20d_pct": 11.08,
+      "change_60d_pct": 1.22,
+      "change_120d_pct": 6.6,
+      "volume_ratio": 1.27,
+      "turnover": null,
+      "max_drawdown_20d_pct": -5.33,
+      "max_drawdown_60d_pct": -25.38,
+      "volatility_20d_pct": 43.29,
+      "rsi_14": 65.4,
+      "distance_to_support_pct": 16.49,
+      "distance_to_resistance_pct": 15.04,
       "scores": {
         "trend": 100,
-        "momentum": 66.44,
-        "flow": 50,
-        "risk": 75,
-        "event": 50
+        "momentum": 85.15,
+        "flow": 54.79,
+        "risk": 54.61,
+        "event": 50.0
       },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 94.8,
+      "action_label": "买入候选",
+      "rank": 3
+    },
+    {
+      "symbol": "512890",
+      "name": "红利低波ETF华泰柏瑞",
+      "market": "cn",
+      "theme": "红利/资源",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [],
+      "reasons": [
+        "综合评分进入买入候选区",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "buy",
+      "score": 74.36,
+      "price": 1.17,
+      "change_1d_pct": 0.52,
+      "change_20d_pct": 5.88,
+      "change_60d_pct": -0.59,
+      "change_120d_pct": 0.34,
+      "volume_ratio": 1.17,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.56,
+      "max_drawdown_60d_pct": -9.73,
+      "volatility_20d_pct": 17.39,
+      "rsi_14": 57.59,
+      "distance_to_support_pct": 9.65,
+      "distance_to_resistance_pct": 3.16,
+      "scores": {
+        "trend": 93.0,
+        "momentum": 70.16,
+        "flow": 57.0,
+        "risk": 83.5,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 78.33,
+      "action_label": "买入候选",
+      "rank": 4
+    },
+    {
+      "symbol": "159992",
+      "name": "创新药ETF银华",
+      "market": "cn",
+      "theme": "创新药/医药",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线",
+        "20日最大回撤偏大：-9.10%",
+        "年化波动率偏高：45.83%"
+      ],
       "reasons": [
         "趋势尚未破坏，维持持有",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
+        "价格站上60日均线",
         "长期趋势仍在",
-        "20 日动量为正：5.78%"
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
       ],
-      "warnings": [],
-      "data_quality": "real"
+      "status": "hold",
+      "score": 69.47,
+      "price": 0.854,
+      "change_1d_pct": -1.39,
+      "change_20d_pct": 3.02,
+      "change_60d_pct": 3.02,
+      "change_120d_pct": 2.64,
+      "volume_ratio": 0.9,
+      "turnover": null,
+      "max_drawdown_20d_pct": -9.1,
+      "max_drawdown_60d_pct": -11.96,
+      "volatility_20d_pct": 45.83,
+      "rsi_14": 52.44,
+      "distance_to_support_pct": 20.79,
+      "distance_to_resistance_pct": 6.79,
+      "scores": {
+        "trend": 93.0,
+        "momentum": 68.16,
+        "flow": 52.65,
+        "risk": 59.99,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 75.59,
+      "action_label": "持有",
+      "rank": 5
+    },
+    {
+      "symbol": "560080",
+      "name": "中药ETF汇添富",
+      "market": "cn",
+      "theme": "央企/红利",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "hold",
+      "score": 69.3,
+      "price": 0.987,
+      "change_1d_pct": -0.7,
+      "change_20d_pct": 7.4,
+      "change_60d_pct": -0.7,
+      "change_120d_pct": -6.62,
+      "volume_ratio": 1.35,
+      "turnover": null,
+      "max_drawdown_20d_pct": -6.41,
+      "max_drawdown_60d_pct": -12.87,
+      "volatility_20d_pct": 29.5,
+      "rsi_14": 46.85,
+      "distance_to_support_pct": 14.77,
+      "distance_to_resistance_pct": 4.36,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 73.05,
+        "flow": 56.44,
+        "risk": 75.66,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 83.43,
+      "action_label": "持有",
+      "rank": 6
     },
     {
       "symbol": "QQQ",
@@ -100,633 +386,3473 @@
       "market": "us",
       "theme": "Nasdaq 100",
       "role": "core",
+      "provider": "yfinance",
+      "source_errors": [],
+      "data_quality": "real",
+      "warnings": [
+        "20日最大回撤偏大：-8.79%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在"
+      ],
       "status": "hold",
-      "score": 71.56,
+      "score": 68.56,
       "price": 717.3,
+      "change_1d_pct": -0.9,
       "change_20d_pct": 0.82,
       "change_60d_pct": 0.96,
+      "change_120d_pct": 17.27,
+      "volume_ratio": 0.74,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.79,
+      "max_drawdown_60d_pct": -11.22,
+      "volatility_20d_pct": 26.56,
+      "rsi_14": 54.05,
+      "distance_to_support_pct": 8.4,
+      "distance_to_resistance_pct": 3.91,
       "scores": {
         "trend": 100,
-        "momentum": 61.25,
-        "flow": 50,
-        "risk": 75,
-        "event": 50
+        "momentum": 53.78,
+        "flow": 48.21,
+        "risk": 69.81,
+        "event": 50.0
       },
-      "reasons": [
-        "趋势尚未破坏，维持持有",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
-        "长期趋势仍在",
-        "20 日动量为正：0.82%"
-      ],
-      "warnings": [],
-      "data_quality": "real"
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 50.0,
+      "action_label": "持有",
+      "rank": 2
     },
     {
-      "symbol": "512010",
-      "name": "医药ETF",
+      "symbol": "515170",
+      "name": "食品饮料ETF华夏",
       "market": "cn",
-      "theme": "医药",
+      "theme": "食品饮料",
       "role": "sector",
-      "status": "hold",
-      "score": 70.56,
-      "price": 0.379,
-      "change_20d_pct": 6.46,
-      "change_60d_pct": 2.43,
-      "scores": {
-        "trend": 100,
-        "momentum": 65.22,
-        "flow": 40,
-        "risk": 75,
-        "event": 50
-      },
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [],
       "reasons": [
         "趋势尚未破坏，维持持有",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
-        "长期趋势仍在",
-        "20 日动量为正：6.46%"
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
       ],
+      "status": "hold",
+      "score": 68.25,
+      "price": 0.473,
+      "change_1d_pct": -0.42,
+      "change_20d_pct": 9.49,
+      "change_60d_pct": -5.21,
+      "change_120d_pct": -15.84,
+      "volume_ratio": 1.06,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.47,
+      "max_drawdown_60d_pct": -13.83,
+      "volatility_20d_pct": 26.95,
+      "rsi_14": 60.71,
+      "distance_to_support_pct": 10.0,
+      "distance_to_resistance_pct": 5.5,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 70.23,
+        "flow": 53.24,
+        "risk": 77.62,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 81.18,
+      "action_label": "持有",
+      "rank": 7
+    },
+    {
+      "symbol": "159985",
+      "name": "豆粕ETF华夏",
+      "market": "cn",
+      "theme": "豆粕/商品",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
       "warnings": [
-        "成交量低于 60 日均量，资金确认不足"
+        "价格未站上20日均线",
+        "20日最大回撤偏大：-8.86%"
       ],
-      "data_quality": "real"
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "hold",
+      "score": 67.98,
+      "price": 2.119,
+      "change_1d_pct": 1.05,
+      "change_20d_pct": -1.76,
+      "change_60d_pct": -1.94,
+      "change_120d_pct": 7.29,
+      "volume_ratio": 0.95,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.86,
+      "max_drawdown_60d_pct": -8.86,
+      "volatility_20d_pct": 33.19,
+      "rsi_14": 49.54,
+      "distance_to_support_pct": 7.02,
+      "distance_to_resistance_pct": 8.07,
+      "scores": {
+        "trend": 93.0,
+        "momentum": 55.35,
+        "flow": 51.91,
+        "risk": 72.4,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 61.67,
+      "action_label": "持有",
+      "rank": 8
+    },
+    {
+      "symbol": "159945",
+      "name": "能源ETF广发",
+      "market": "cn",
+      "theme": "能源/商品",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "成交量低于60日均量，资金确认不足",
+        "60日最大回撤偏大：-18.93%",
+        "年化波动率偏高：37.68%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 67.6,
+      "price": 1.35,
+      "change_1d_pct": 2.82,
+      "change_20d_pct": 8.78,
+      "change_60d_pct": -1.32,
+      "change_120d_pct": 1.73,
+      "volume_ratio": 0.69,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.34,
+      "max_drawdown_60d_pct": -18.93,
+      "volatility_20d_pct": 37.68,
+      "rsi_14": 66.88,
+      "distance_to_support_pct": 15.48,
+      "distance_to_resistance_pct": 6.81,
+      "scores": {
+        "trend": 85.0,
+        "momentum": 76.48,
+        "flow": 40.52,
+        "risk": 65.81,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 85.69,
+      "action_label": "持有",
+      "rank": 9
+    },
+    {
+      "symbol": "512690",
+      "name": "酒ETF鹏华",
+      "market": "cn",
+      "theme": "酒/消费",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-17.81%",
+        "年化波动率偏高：35.26%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 67.54,
+      "price": 0.434,
+      "change_1d_pct": -0.69,
+      "change_20d_pct": 13.32,
+      "change_60d_pct": -6.06,
+      "change_120d_pct": -22.78,
+      "volume_ratio": 0.97,
+      "turnover": null,
+      "max_drawdown_20d_pct": -4.19,
+      "max_drawdown_60d_pct": -17.81,
+      "volatility_20d_pct": 35.26,
+      "rsi_14": 60.4,
+      "distance_to_support_pct": 13.32,
+      "distance_to_resistance_pct": 7.37,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 70.97,
+        "flow": 54.8,
+        "risk": 69.56,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 82.75,
+      "action_label": "持有",
+      "rank": 10
+    },
+    {
+      "symbol": "159309",
+      "name": "油气ETF汇添富",
+      "market": "cn",
+      "theme": "红利/低波",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-17.49%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 67.3,
+      "price": 1.366,
+      "change_1d_pct": 0.22,
+      "change_20d_pct": 6.39,
+      "change_60d_pct": -9.36,
+      "change_120d_pct": -1.01,
+      "volume_ratio": 0.85,
+      "turnover": null,
+      "max_drawdown_20d_pct": -5.31,
+      "max_drawdown_60d_pct": -17.49,
+      "volatility_20d_pct": 33.04,
+      "rsi_14": 73.04,
+      "distance_to_support_pct": 10.97,
+      "distance_to_resistance_pct": 9.22,
+      "scores": {
+        "trend": 85.0,
+        "momentum": 61.25,
+        "flow": 53.46,
+        "risk": 71.94,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 68.24,
+      "action_label": "持有",
+      "rank": 11
     },
     {
       "symbol": "159928",
-      "name": "消费ETF",
+      "name": "消费ETF汇添富",
       "market": "cn",
       "theme": "消费",
       "role": "sector",
-      "status": "hold",
-      "score": 60.09,
-      "price": 0.669,
-      "change_20d_pct": 8.25,
-      "change_60d_pct": -6.95,
-      "scores": {
-        "trend": 70,
-        "momentum": 51.36,
-        "flow": 65,
-        "risk": 55,
-        "event": 50
-      },
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-16.25%"
+      ],
       "reasons": [
         "趋势尚未破坏，维持持有",
-        "价格站上 20 日均线",
-        "价格站上 60 日均线",
-        "20 日动量为正：8.25%",
-        "成交量高于 60 日均量，资金关注度改善"
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
       ],
+      "status": "hold",
+      "score": 67.27,
+      "price": 0.67,
+      "change_1d_pct": -0.59,
+      "change_20d_pct": 8.41,
+      "change_60d_pct": -6.82,
+      "change_120d_pct": -16.25,
+      "volume_ratio": 1.42,
+      "turnover": null,
+      "max_drawdown_20d_pct": -4.15,
+      "max_drawdown_60d_pct": -16.25,
+      "volatility_20d_pct": 27.51,
+      "rsi_14": 56.91,
+      "distance_to_support_pct": 11.11,
+      "distance_to_resistance_pct": 7.46,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 66.0,
+        "flow": 54.85,
+        "risk": 76.0,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 76.37,
+      "action_label": "持有",
+      "rank": 12
+    },
+    {
+      "symbol": "159825",
+      "name": "农业ETF富国",
+      "market": "cn",
+      "theme": "农业/养殖",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
       "warnings": [
-        "60 日动量为负：-6.95%",
-        "60 日最大回撤偏大：-16.25%"
+        "60日最大回撤偏大：-19.23%"
       ],
-      "data_quality": "real"
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 66.0,
+      "price": 0.724,
+      "change_1d_pct": 0.14,
+      "change_20d_pct": 7.26,
+      "change_60d_pct": -10.51,
+      "change_120d_pct": -14.72,
+      "volume_ratio": 0.73,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.05,
+      "max_drawdown_60d_pct": -19.23,
+      "volatility_20d_pct": 22.18,
+      "rsi_14": 61.9,
+      "distance_to_support_pct": 11.21,
+      "distance_to_resistance_pct": 11.33,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 59.5,
+        "flow": 55.72,
+        "risk": 77.24,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 68.53,
+      "action_label": "持有",
+      "rank": 13
+    },
+    {
+      "symbol": "513360",
+      "name": "教育ETF博时",
+      "market": "cn",
+      "theme": "港股/海外",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-17.41%",
+        "RSI过热：80.5"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 65.57,
+      "price": 0.476,
+      "change_1d_pct": -1.04,
+      "change_20d_pct": 8.68,
+      "change_60d_pct": -4.42,
+      "change_120d_pct": -15.75,
+      "volume_ratio": 1.3,
+      "turnover": null,
+      "max_drawdown_20d_pct": -6.29,
+      "max_drawdown_60d_pct": -17.41,
+      "volatility_20d_pct": 30.82,
+      "rsi_14": 80.46,
+      "distance_to_support_pct": 16.67,
+      "distance_to_resistance_pct": 3.78,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 69.53,
+        "flow": 63.32,
+        "risk": 63.51,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 80.49,
+      "action_label": "持有",
+      "rank": 14
+    },
+    {
+      "symbol": "513050",
+      "name": "中概互联网ETF易方达",
+      "market": "cn",
+      "theme": "中概/海外互联网",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-22.81%",
+        "年化波动率偏高：37.76%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 64.69,
+      "price": 1.161,
+      "change_1d_pct": -2.35,
+      "change_20d_pct": 6.71,
+      "change_60d_pct": -3.81,
+      "change_120d_pct": -19.15,
+      "volume_ratio": 0.76,
+      "turnover": null,
+      "max_drawdown_20d_pct": -7.16,
+      "max_drawdown_60d_pct": -22.81,
+      "volatility_20d_pct": 37.76,
+      "rsi_14": 60.74,
+      "distance_to_support_pct": 23.38,
+      "distance_to_resistance_pct": 5.0,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 65.32,
+        "flow": 53.47,
+        "risk": 61.79,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 76.27,
+      "action_label": "持有",
+      "rank": 15
     },
     {
       "symbol": "512880",
-      "name": "证券ETF",
+      "name": "证券ETF国泰",
       "market": "cn",
       "theme": "证券",
       "role": "sector",
-      "status": "watch",
-      "score": 57.19,
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上60日均线",
+        "短期均线强于中期均线"
+      ],
+      "status": "hold",
+      "score": 63.76,
       "price": 1.096,
+      "change_1d_pct": -1.17,
       "change_20d_pct": -3.18,
       "change_60d_pct": 0.09,
+      "change_120d_pct": -7.98,
+      "volume_ratio": 0.78,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.98,
+      "max_drawdown_60d_pct": -7.74,
+      "volatility_20d_pct": 21.82,
+      "rsi_14": 49.66,
+      "distance_to_support_pct": 9.49,
+      "distance_to_resistance_pct": 7.3,
       "scores": {
-        "trend": 70,
-        "momentum": 39.74,
-        "flow": 50,
-        "risk": 75,
-        "event": 50
+        "trend": 78.0,
+        "momentum": 53.65,
+        "flow": 48.58,
+        "risk": 81.54,
+        "event": 50.0
       },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 63.53,
+      "action_label": "持有",
+      "rank": 16
+    },
+    {
+      "symbol": "159201",
+      "name": "自由现金流ETF华夏",
+      "market": "cn",
+      "theme": "自由现金流/质量",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-18.13%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "hold",
+      "score": 63.08,
+      "price": 1.166,
+      "change_1d_pct": 0.0,
+      "change_20d_pct": 8.16,
+      "change_60d_pct": -11.06,
+      "change_120d_pct": -11.47,
+      "volume_ratio": 1.21,
+      "turnover": null,
+      "max_drawdown_20d_pct": -2.13,
+      "max_drawdown_60d_pct": -18.13,
+      "volatility_20d_pct": 23.28,
+      "rsi_14": 66.87,
+      "distance_to_support_pct": 9.9,
+      "distance_to_resistance_pct": 11.15,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 60.2,
+        "flow": 51.86,
+        "risk": 77.74,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 67.94,
+      "action_label": "持有",
+      "rank": 17
+    },
+    {
+      "symbol": "159865",
+      "name": "养殖ETF国泰",
+      "market": "cn",
+      "theme": "养殖/畜牧",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-20.33%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "短期均线强于中期均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 63.07,
+      "price": 0.532,
+      "change_1d_pct": -0.19,
+      "change_20d_pct": 3.7,
+      "change_60d_pct": -9.98,
+      "change_120d_pct": -15.56,
+      "volume_ratio": 0.87,
+      "turnover": null,
+      "max_drawdown_20d_pct": -5.51,
+      "max_drawdown_60d_pct": -20.33,
+      "volatility_20d_pct": 23.94,
+      "rsi_14": 52.94,
+      "distance_to_support_pct": 11.3,
+      "distance_to_resistance_pct": 12.78,
+      "scores": {
+        "trend": 78.0,
+        "momentum": 50.98,
+        "flow": 53.56,
+        "risk": 74.78,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 58.14,
+      "action_label": "持有",
+      "rank": 18
+    },
+    {
+      "symbol": "159697",
+      "name": "石油ETF鹏华",
+      "market": "cn",
+      "theme": "油气/资源",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "60日最大回撤偏大：-16.96%"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "hold",
+      "score": 61.99,
+      "price": 1.291,
+      "change_1d_pct": 0.7,
+      "change_20d_pct": 4.87,
+      "change_60d_pct": -9.59,
+      "change_120d_pct": -4.23,
+      "volume_ratio": 1.17,
+      "turnover": null,
+      "max_drawdown_20d_pct": -5.05,
+      "max_drawdown_60d_pct": -16.96,
+      "volatility_20d_pct": 29.92,
+      "rsi_14": 71.03,
+      "distance_to_support_pct": 8.95,
+      "distance_to_resistance_pct": 10.53,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 55.44,
+        "flow": 55.59,
+        "risk": 73.4,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 60.98,
+      "action_label": "持有",
+      "rank": 19
+    },
+    {
+      "symbol": "512070",
+      "name": "证券保险ETF易方达",
+      "market": "cn",
+      "theme": "非银/证券保险",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线"
+      ],
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上60日均线",
+        "短期均线强于中期均线"
+      ],
+      "status": "hold",
+      "score": 60.44,
+      "price": 0.8,
+      "change_1d_pct": -0.87,
+      "change_20d_pct": 0.13,
+      "change_60d_pct": -0.74,
+      "change_120d_pct": -12.57,
+      "volume_ratio": 0.75,
+      "turnover": null,
+      "max_drawdown_20d_pct": -2.91,
+      "max_drawdown_60d_pct": -6.08,
+      "volatility_20d_pct": 21.37,
+      "rsi_14": 56.0,
+      "distance_to_support_pct": 7.82,
+      "distance_to_resistance_pct": 3.0,
+      "scores": {
+        "trend": 63.0,
+        "momentum": 56.4,
+        "flow": 50.29,
+        "risk": 82.52,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 65.59,
+      "action_label": "持有",
+      "rank": 20
+    },
+    {
+      "symbol": "515230",
+      "name": "软件ETF国泰",
+      "market": "cn",
+      "theme": "软件/科技",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "20日最大回撤偏大：-8.65%",
+        "60日最大回撤偏大：-24.15%",
+        "年化波动率偏高：41.87%"
+      ],
       "reasons": [
         "信号不足，等待确认",
-        "价格站上 60 日均线"
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
       ],
+      "status": "watch",
+      "score": 59.46,
+      "price": 0.747,
+      "change_1d_pct": -0.93,
+      "change_20d_pct": 7.64,
+      "change_60d_pct": -13.94,
+      "change_120d_pct": -21.04,
+      "volume_ratio": 1.62,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.65,
+      "max_drawdown_60d_pct": -24.15,
+      "volatility_20d_pct": 41.87,
+      "rsi_14": 73.13,
+      "distance_to_support_pct": 15.99,
+      "distance_to_resistance_pct": 13.65,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 50.09,
+        "flow": 62.69,
+        "risk": 55.98,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 55.2,
+      "action_label": "观察",
+      "rank": 21
+    },
+    {
+      "symbol": "512400",
+      "name": "有色金属ETF南方",
+      "market": "cn",
+      "theme": "有色金属",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
       "warnings": [
-        "价格未站上 20 日均线"
+        "20日最大回撤偏大：-8.40%",
+        "60日最大回撤偏大：-24.59%",
+        "年化波动率偏高：51.77%"
       ],
-      "data_quality": "real"
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "watch",
+      "score": 59.24,
+      "price": 1.917,
+      "change_1d_pct": 0.74,
+      "change_20d_pct": 9.86,
+      "change_60d_pct": -13.22,
+      "change_120d_pct": -14.91,
+      "volume_ratio": 1.46,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.4,
+      "max_drawdown_60d_pct": -24.59,
+      "volatility_20d_pct": 51.77,
+      "rsi_14": 72.41,
+      "distance_to_support_pct": 17.97,
+      "distance_to_resistance_pct": 12.42,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 57.24,
+        "flow": 59.91,
+        "risk": 46.34,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 62.65,
+      "action_label": "观察",
+      "rank": 22
+    },
+    {
+      "symbol": "516510",
+      "name": "云计算ETF易方达",
+      "market": "cn",
+      "theme": "云计算/科技",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "20日最大回撤偏大：-14.39%",
+        "60日最大回撤偏大：-19.06%",
+        "年化波动率偏高：54.13%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "长期趋势仍在",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 57.18,
+      "price": 1.76,
+      "change_1d_pct": -0.96,
+      "change_20d_pct": -2.49,
+      "change_60d_pct": -11.47,
+      "change_120d_pct": -3.67,
+      "volume_ratio": 1.27,
+      "turnover": null,
+      "max_drawdown_20d_pct": -14.39,
+      "max_drawdown_60d_pct": -19.06,
+      "volatility_20d_pct": 54.13,
+      "rsi_14": 59.85,
+      "distance_to_support_pct": 12.89,
+      "distance_to_resistance_pct": 9.43,
+      "scores": {
+        "trend": 85.0,
+        "momentum": 39.2,
+        "flow": 54.29,
+        "risk": 40.12,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 43.53,
+      "action_label": "卖出/回避",
+      "rank": 23
+    },
+    {
+      "symbol": "513090",
+      "name": "香港证券ETF易方达",
+      "market": "cn",
+      "theme": "港股科技",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线",
+        "成交量低于60日均量，资金确认不足"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上60日均线",
+        "短期均线强于中期均线"
+      ],
+      "status": "watch",
+      "score": 56.67,
+      "price": 1.825,
+      "change_1d_pct": -1.3,
+      "change_20d_pct": -0.82,
+      "change_60d_pct": -2.04,
+      "change_120d_pct": -12.55,
+      "volume_ratio": 0.4,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.8,
+      "max_drawdown_60d_pct": -7.63,
+      "volatility_20d_pct": 24.92,
+      "rsi_14": 53.99,
+      "distance_to_support_pct": 6.48,
+      "distance_to_resistance_pct": 3.95,
+      "scores": {
+        "trend": 63.0,
+        "momentum": 52.84,
+        "flow": 38.48,
+        "risk": 79.09,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 61.47,
+      "action_label": "观察",
+      "rank": 24
+    },
+    {
+      "symbol": "159766",
+      "name": "旅游ETF富国",
+      "market": "cn",
+      "theme": "旅游/消费",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "60日最大回撤偏大：-15.69%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "watch",
+      "score": 56.0,
+      "price": 0.571,
+      "change_1d_pct": -0.52,
+      "change_20d_pct": 6.53,
+      "change_60d_pct": -11.2,
+      "change_120d_pct": -30.7,
+      "volume_ratio": 0.74,
+      "turnover": null,
+      "max_drawdown_20d_pct": -3.41,
+      "max_drawdown_60d_pct": -15.69,
+      "volatility_20d_pct": 26.87,
+      "rsi_14": 65.91,
+      "distance_to_support_pct": 7.33,
+      "distance_to_resistance_pct": 10.51,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 52.51,
+        "flow": 56.25,
+        "risk": 77.49,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 61.37,
+      "action_label": "观察",
+      "rank": 25
+    },
+    {
+      "symbol": "512980",
+      "name": "传媒ETF广发",
+      "market": "cn",
+      "theme": "传媒",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "20日最大回撤偏大：-11.34%",
+        "60日最大回撤偏大：-25.55%",
+        "年化波动率偏高：49.42%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "watch",
+      "score": 55.78,
+      "price": 0.865,
+      "change_1d_pct": -1.82,
+      "change_20d_pct": 6.13,
+      "change_60d_pct": -15.53,
+      "change_120d_pct": -27.0,
+      "volume_ratio": 1.54,
+      "turnover": null,
+      "max_drawdown_20d_pct": -11.34,
+      "max_drawdown_60d_pct": -25.55,
+      "volatility_20d_pct": 49.42,
+      "rsi_14": 67.97,
+      "distance_to_support_pct": 16.42,
+      "distance_to_resistance_pct": 15.38,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 42.7,
+        "flow": 63.04,
+        "risk": 43.29,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 46.86,
+      "action_label": "观察",
+      "rank": 26
+    },
+    {
+      "symbol": "159611",
+      "name": "电力ETF广发",
+      "market": "cn",
+      "theme": "电力/绿电",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "60日最大回撤偏大：-19.97%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "watch",
+      "score": 54.23,
+      "price": 1.059,
+      "change_1d_pct": -0.84,
+      "change_20d_pct": 5.16,
+      "change_60d_pct": -11.9,
+      "change_120d_pct": 2.32,
+      "volume_ratio": 0.84,
+      "turnover": null,
+      "max_drawdown_20d_pct": -4.09,
+      "max_drawdown_60d_pct": -19.97,
+      "volatility_20d_pct": 28.97,
+      "rsi_14": 56.37,
+      "distance_to_support_pct": 5.27,
+      "distance_to_resistance_pct": 18.7,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 51.78,
+        "flow": 52.64,
+        "risk": 71.68,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 53.73,
+      "action_label": "观察",
+      "rank": 27
+    },
+    {
+      "symbol": "159516",
+      "name": "半导体设备ETF国泰",
+      "market": "cn",
+      "theme": "半导体设备",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线",
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-33.15%",
+        "60日最大回撤偏大：-39.32%",
+        "年化波动率偏高：95.25%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "长期趋势仍在",
+        "短期均线强于中期均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 53.97,
+      "price": 0.72,
+      "change_1d_pct": 2.71,
+      "change_20d_pct": -26.0,
+      "change_60d_pct": 23.08,
+      "change_120d_pct": 60.0,
+      "volume_ratio": 1.68,
+      "turnover": null,
+      "max_drawdown_20d_pct": -33.15,
+      "max_drawdown_60d_pct": -39.32,
+      "volatility_20d_pct": 95.25,
+      "rsi_14": 51.83,
+      "distance_to_support_pct": 26.09,
+      "distance_to_resistance_pct": 38.47,
+      "scores": {
+        "trend": 73.0,
+        "momentum": 58.22,
+        "flow": 54.31,
+        "risk": 10.99,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 56.76,
+      "action_label": "卖出/回避",
+      "rank": 28
+    },
+    {
+      "symbol": "562550",
+      "name": "绿电ETF华夏",
+      "market": "cn",
+      "theme": "机器人/高端制造",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "60日最大回撤偏大：-19.81%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线"
+      ],
+      "status": "watch",
+      "score": 53.88,
+      "price": 1.152,
+      "change_1d_pct": -0.6,
+      "change_20d_pct": 4.92,
+      "change_60d_pct": -11.66,
+      "change_120d_pct": 2.86,
+      "volume_ratio": 0.75,
+      "turnover": null,
+      "max_drawdown_20d_pct": -4.1,
+      "max_drawdown_60d_pct": -19.81,
+      "volatility_20d_pct": 27.59,
+      "rsi_14": 56.13,
+      "distance_to_support_pct": 5.01,
+      "distance_to_resistance_pct": 18.75,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.9,
+        "flow": 51.52,
+        "risk": 72.31,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 52.16,
+      "action_label": "观察",
+      "rank": 29
+    },
+    {
+      "symbol": "560660",
+      "name": "云计算50ETF新华",
+      "market": "cn",
+      "theme": "国企/央企",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-17.41%",
+        "60日最大回撤偏大：-19.08%",
+        "年化波动率偏高：61.94%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "长期趋势仍在"
+      ],
+      "status": "sell",
+      "score": 53.13,
+      "price": 1.14,
+      "change_1d_pct": -0.44,
+      "change_20d_pct": -5.08,
+      "change_60d_pct": -10.73,
+      "change_120d_pct": 6.05,
+      "volume_ratio": 0.9,
+      "turnover": null,
+      "max_drawdown_20d_pct": -17.41,
+      "max_drawdown_60d_pct": -19.08,
+      "volatility_20d_pct": 61.94,
+      "rsi_14": 57.43,
+      "distance_to_support_pct": 13.89,
+      "distance_to_resistance_pct": 8.51,
+      "scores": {
+        "trend": 80.0,
+        "momentum": 38.99,
+        "flow": 49.8,
+        "risk": 29.51,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 43.63,
+      "action_label": "卖出/回避",
+      "rank": 30
+    },
+    {
+      "symbol": "159869",
+      "name": "游戏ETF华夏",
+      "market": "cn",
+      "theme": "游戏/传媒",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "20日最大回撤偏大：-11.96%",
+        "60日最大回撤偏大：-22.40%",
+        "年化波动率偏高：52.10%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "watch",
+      "score": 52.58,
+      "price": 1.135,
+      "change_1d_pct": -1.82,
+      "change_20d_pct": 2.99,
+      "change_60d_pct": -14.27,
+      "change_120d_pct": -25.72,
+      "volume_ratio": 1.31,
+      "turnover": null,
+      "max_drawdown_20d_pct": -11.96,
+      "max_drawdown_60d_pct": -22.4,
+      "volatility_20d_pct": 52.1,
+      "rsi_14": 60.63,
+      "distance_to_support_pct": 14.19,
+      "distance_to_resistance_pct": 12.86,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 36.61,
+        "flow": 55.4,
+        "risk": 42.31,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 39.12,
+      "action_label": "观察",
+      "rank": 31
+    },
+    {
+      "symbol": "159883",
+      "name": "医疗器械ETF永赢",
+      "market": "cn",
+      "theme": "医疗/医药",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "成交量低于60日均量，资金确认不足",
+        "60日最大回撤偏大：-15.90%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线"
+      ],
+      "status": "watch",
+      "score": 51.88,
+      "price": 0.435,
+      "change_1d_pct": -1.14,
+      "change_20d_pct": 4.32,
+      "change_60d_pct": -10.86,
+      "change_120d_pct": -15.04,
+      "volume_ratio": 0.69,
+      "turnover": null,
+      "max_drawdown_20d_pct": -6.11,
+      "max_drawdown_60d_pct": -15.9,
+      "volatility_20d_pct": 26.72,
+      "rsi_14": 55.36,
+      "distance_to_support_pct": 8.21,
+      "distance_to_resistance_pct": 9.89,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 49.91,
+        "flow": 38.68,
+        "risk": 77.79,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 55.78,
+      "action_label": "观察",
+      "rank": 32
+    },
+    {
+      "symbol": "159870",
+      "name": "化工ETF鹏华",
+      "market": "cn",
+      "theme": "化工/材料",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "60日最大回撤偏大：-17.48%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线"
+      ],
+      "status": "watch",
+      "score": 51.85,
+      "price": 0.818,
+      "change_1d_pct": 1.24,
+      "change_20d_pct": 2.12,
+      "change_60d_pct": -11.09,
+      "change_120d_pct": -8.09,
+      "volume_ratio": 0.71,
+      "turnover": null,
+      "max_drawdown_20d_pct": -5.73,
+      "max_drawdown_60d_pct": -17.48,
+      "volatility_20d_pct": 34.29,
+      "rsi_14": 70.66,
+      "distance_to_support_pct": 10.39,
+      "distance_to_resistance_pct": 9.78,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 46.01,
+        "flow": 48.5,
+        "risk": 70.97,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 50.1,
+      "action_label": "观察",
+      "rank": 33
+    },
+    {
+      "symbol": "515210",
+      "name": "钢铁ETF国泰",
+      "market": "cn",
+      "theme": "钢铁/周期",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "60日最大回撤偏大：-21.48%"
+      ],
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上20日均线",
+        "近20日上涨日成交占优"
+      ],
+      "status": "watch",
+      "score": 51.8,
+      "price": 1.17,
+      "change_1d_pct": -1.02,
+      "change_20d_pct": 5.12,
+      "change_60d_pct": -18.52,
+      "change_120d_pct": -23.88,
+      "volume_ratio": 0.85,
+      "turnover": null,
+      "max_drawdown_20d_pct": -2.84,
+      "max_drawdown_60d_pct": -21.48,
+      "volatility_20d_pct": 23.88,
+      "rsi_14": 64.97,
+      "distance_to_support_pct": 5.98,
+      "distance_to_resistance_pct": 20.17,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 38.52,
+        "flow": 55.16,
+        "risk": 74.23,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 42.06,
+      "action_label": "观察",
+      "rank": 34
+    },
+    {
+      "symbol": "515400",
+      "name": "大数据ETF富国",
+      "market": "cn",
+      "theme": "大数据/科技",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "20日最大回撤偏大：-15.68%",
+        "60日最大回撤偏大：-23.86%",
+        "年化波动率偏高：54.69%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "价格站上60日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 48.65,
+      "price": 0.908,
+      "change_1d_pct": -0.77,
+      "change_20d_pct": -2.58,
+      "change_60d_pct": -15.85,
+      "change_120d_pct": -11.93,
+      "volume_ratio": 1.14,
+      "turnover": null,
+      "max_drawdown_20d_pct": -15.68,
+      "max_drawdown_60d_pct": -23.86,
+      "volatility_20d_pct": 54.69,
+      "rsi_14": 60.77,
+      "distance_to_support_pct": 13.36,
+      "distance_to_resistance_pct": 15.86,
+      "scores": {
+        "trend": 70.0,
+        "momentum": 29.05,
+        "flow": 52.14,
+        "risk": 33.07,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 30.78,
+      "action_label": "卖出/回避",
+      "rank": 35
     },
     {
       "symbol": "512760",
-      "name": "芯片ETF",
+      "name": "芯片ETF国泰",
       "market": "cn",
       "theme": "芯片",
       "role": "sector",
-      "status": "watch",
-      "score": 50.0,
-      "price": null,
-      "change_20d_pct": null,
-      "change_60d_pct": null,
-      "scores": {
-        "trend": 50.0,
-        "momentum": 50.0,
-        "flow": 50.0,
-        "risk": 50.0,
-        "event": 50.0
-      },
-      "reasons": [
-        "数据不足，保持观察"
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
       ],
+      "data_quality": "fallback",
       "warnings": [
-        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512760 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-        "历史数据不足，暂不生成交易信号"
+        "价格未站上20日均线",
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-31.22%",
+        "60日最大回撤偏大：-37.16%",
+        "年化波动率偏高：80.38%"
       ],
-      "data_quality": "missing"
-    },
-    {
-      "symbol": "512480",
-      "name": "半导体ETF",
-      "market": "cn",
-      "theme": "半导体",
-      "role": "sector",
-      "status": "watch",
-      "score": 50.0,
-      "price": null,
-      "change_20d_pct": null,
-      "change_60d_pct": null,
-      "scores": {
-        "trend": 50.0,
-        "momentum": 50.0,
-        "flow": 50.0,
-        "risk": 50.0,
-        "event": 50.0
-      },
       "reasons": [
-        "数据不足，保持观察"
-      ],
-      "warnings": [
-        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512480 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-        "历史数据不足，暂不生成交易信号"
-      ],
-      "data_quality": "missing"
-    },
-    {
-      "symbol": "515790",
-      "name": "光伏ETF",
-      "market": "cn",
-      "theme": "光伏",
-      "role": "sector",
-      "status": "watch",
-      "score": 50.0,
-      "price": null,
-      "change_20d_pct": null,
-      "change_60d_pct": null,
-      "scores": {
-        "trend": 50.0,
-        "momentum": 50.0,
-        "flow": 50.0,
-        "risk": 50.0,
-        "event": 50.0
-      },
-      "reasons": [
-        "数据不足，保持观察"
-      ],
-      "warnings": [
-        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.515790 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-        "历史数据不足，暂不生成交易信号"
-      ],
-      "data_quality": "missing"
-    },
-    {
-      "symbol": "516160",
-      "name": "新能源ETF",
-      "market": "cn",
-      "theme": "新能源",
-      "role": "sector",
-      "status": "watch",
-      "score": 50.0,
-      "price": null,
-      "change_20d_pct": null,
-      "change_60d_pct": null,
-      "scores": {
-        "trend": 50.0,
-        "momentum": 50.0,
-        "flow": 50.0,
-        "risk": 50.0,
-        "event": 50.0
-      },
-      "reasons": [
-        "数据不足，保持观察"
-      ],
-      "warnings": [
-        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.516160 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-        "历史数据不足，暂不生成交易信号"
-      ],
-      "data_quality": "missing"
-    },
-    {
-      "symbol": "588000",
-      "name": "科创50ETF",
-      "market": "cn",
-      "theme": "科创",
-      "role": "broad",
-      "status": "watch",
-      "score": 50.0,
-      "price": null,
-      "change_20d_pct": null,
-      "change_60d_pct": null,
-      "scores": {
-        "trend": 50.0,
-        "momentum": 50.0,
-        "flow": 50.0,
-        "risk": 50.0,
-        "event": 50.0
-      },
-      "reasons": [
-        "数据不足，保持观察"
-      ],
-      "warnings": [
-        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.588000 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-        "历史数据不足，暂不生成交易信号"
-      ],
-      "data_quality": "missing"
-    },
-    {
-      "symbol": "515050",
-      "name": "5GETF",
-      "market": "cn",
-      "theme": "通信",
-      "role": "sector",
-      "status": "sell",
-      "score": 39.93,
-      "price": 1.014,
-      "change_20d_pct": -20.9,
-      "change_60d_pct": -12.28,
-      "scores": {
-        "trend": 50,
-        "momentum": 27.72,
-        "flow": 50,
-        "risk": 20,
-        "event": 50
-      },
-      "reasons": [
-        "趋势或综合评分触发卖出/回避",
+        "趋势或风险触发卖出/回避",
         "长期趋势仍在"
       ],
-      "warnings": [
-        "价格未站上 20 日均线",
-        "价格未站上 60 日均线",
-        "60 日动量为负：-12.28%",
-        "20 日最大回撤偏大：-28.66%",
-        "60 日最大回撤偏大：-38.78%"
-      ],
-      "data_quality": "real"
+      "status": "sell",
+      "score": 47.39,
+      "price": 1.13,
+      "change_1d_pct": 1.62,
+      "change_20d_pct": -27.1,
+      "change_60d_pct": 0.27,
+      "change_120d_pct": 27.83,
+      "volume_ratio": 0.79,
+      "turnover": null,
+      "max_drawdown_20d_pct": -31.22,
+      "max_drawdown_60d_pct": -37.16,
+      "volatility_20d_pct": 80.38,
+      "rsi_14": 48.04,
+      "distance_to_support_pct": 13.45,
+      "distance_to_resistance_pct": 40.27,
+      "scores": {
+        "trend": 65.0,
+        "momentum": 45.76,
+        "flow": 48.29,
+        "risk": 11.97,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 50.49,
+      "action_label": "卖出/回避",
+      "rank": 36
     },
     {
-      "symbol": "159915",
-      "name": "创业板ETF",
+      "symbol": "159667",
+      "name": "工业母机ETF国泰",
       "market": "cn",
-      "theme": "创业板",
-      "role": "broad",
-      "status": "sell",
-      "score": 38.28,
-      "price": 3.54,
-      "change_20d_pct": -12.38,
-      "change_60d_pct": -12.55,
-      "scores": {
-        "trend": 50,
-        "momentum": 21.14,
-        "flow": 50,
-        "risk": 20,
-        "event": 50
-      },
-      "reasons": [
-        "趋势或综合评分触发卖出/回避",
-        "长期趋势仍在"
+      "theme": "工业母机/高端制造",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
       ],
+      "data_quality": "fallback",
       "warnings": [
-        "价格未站上 20 日均线",
-        "价格未站上 60 日均线",
-        "60 日动量为负：-12.55%",
-        "20 日最大回撤偏大：-15.44%",
-        "60 日最大回撤偏大：-25.60%"
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-27.95%",
+        "60日最大回撤偏大：-36.89%",
+        "年化波动率偏高：73.26%"
       ],
-      "data_quality": "real"
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "长期趋势仍在",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 44.68,
+      "price": 0.68,
+      "change_1d_pct": 2.41,
+      "change_20d_pct": -16.67,
+      "change_60d_pct": -12.6,
+      "change_120d_pct": 17.24,
+      "volume_ratio": 1.86,
+      "turnover": null,
+      "max_drawdown_20d_pct": -27.95,
+      "max_drawdown_60d_pct": -36.89,
+      "volatility_20d_pct": 73.26,
+      "rsi_14": 53.14,
+      "distance_to_support_pct": 17.24,
+      "distance_to_resistance_pct": 35.15,
+      "scores": {
+        "trend": 65.0,
+        "momentum": 26.0,
+        "flow": 58.67,
+        "risk": 12.95,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 27.06,
+      "action_label": "卖出/回避",
+      "rank": 37
+    },
+    {
+      "symbol": "560710",
+      "name": "船舶ETF富国",
+      "market": "cn",
+      "theme": "中证/央企",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "partial",
+      "warnings": [
+        "价格未站上60日均线",
+        "成交量低于60日均量，资金确认不足",
+        "20日最大回撤偏大：-10.50%",
+        "60日最大回撤偏大：-24.05%",
+        "历史窗口较短，降低信号置信度"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 44.6,
+      "price": 0.89,
+      "change_1d_pct": -0.34,
+      "change_20d_pct": 0.79,
+      "change_60d_pct": -20.82,
+      "change_120d_pct": null,
+      "volume_ratio": 0.46,
+      "turnover": null,
+      "max_drawdown_20d_pct": -10.5,
+      "max_drawdown_60d_pct": -24.05,
+      "volatility_20d_pct": 34.32,
+      "rsi_14": 75.0,
+      "distance_to_support_pct": 8.8,
+      "distance_to_resistance_pct": 21.01,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 31.7,
+        "flow": 37.75,
+        "risk": 60.82,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 30.88,
+      "action_label": "卖出/回避",
+      "rank": 38
+    },
+    {
+      "symbol": "159755",
+      "name": "电池ETF广发",
+      "market": "cn",
+      "theme": "电池/新能源",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-8.69%",
+        "60日最大回撤偏大：-23.94%",
+        "年化波动率偏高：39.96%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 44.41,
+      "price": 0.96,
+      "change_1d_pct": -1.13,
+      "change_20d_pct": -4.38,
+      "change_60d_pct": -20.6,
+      "change_120d_pct": -9.77,
+      "volume_ratio": 1.23,
+      "turnover": null,
+      "max_drawdown_20d_pct": -8.69,
+      "max_drawdown_60d_pct": -23.94,
+      "volatility_20d_pct": 39.96,
+      "rsi_14": 57.74,
+      "distance_to_support_pct": 7.5,
+      "distance_to_resistance_pct": 22.29,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 22.52,
+        "flow": 50.7,
+        "risk": 57.6,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 24.46,
+      "action_label": "卖出/回避",
+      "rank": 39
+    },
+    {
+      "symbol": "515030",
+      "name": "新能源车ETF华夏",
+      "market": "cn",
+      "theme": "新能源车",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-9.22%",
+        "60日最大回撤偏大：-26.25%",
+        "年化波动率偏高：37.60%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 43.21,
+      "price": 1.639,
+      "change_1d_pct": -1.44,
+      "change_20d_pct": -4.38,
+      "change_60d_pct": -22.06,
+      "change_120d_pct": -11.31,
+      "volume_ratio": 0.74,
+      "turnover": null,
+      "max_drawdown_20d_pct": -9.22,
+      "max_drawdown_60d_pct": -26.25,
+      "volatility_20d_pct": 37.6,
+      "rsi_14": 60.19,
+      "distance_to_support_pct": 8.04,
+      "distance_to_resistance_pct": 25.5,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 19.91,
+        "flow": 47.36,
+        "risk": 58.42,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 21.23,
+      "action_label": "卖出/回避",
+      "rank": 40
+    },
+    {
+      "symbol": "562800",
+      "name": "稀有金属ETF嘉实",
+      "market": "cn",
+      "theme": "稀土/材料",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-14.99%",
+        "60日最大回撤偏大：-33.28%",
+        "年化波动率偏高：54.93%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "成交量处于有效放大区间",
+        "近20日上涨日成交占优"
+      ],
+      "status": "sell",
+      "score": 41.54,
+      "price": 0.96,
+      "change_1d_pct": 1.05,
+      "change_20d_pct": -2.83,
+      "change_60d_pct": -18.78,
+      "change_120d_pct": -8.57,
+      "volume_ratio": 1.01,
+      "turnover": null,
+      "max_drawdown_20d_pct": -14.99,
+      "max_drawdown_60d_pct": -33.28,
+      "volatility_20d_pct": 54.93,
+      "rsi_14": 64.67,
+      "distance_to_support_pct": 15.94,
+      "distance_to_resistance_pct": 29.27,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 26.51,
+        "flow": 54.71,
+        "risk": 26.47,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 27.75,
+      "action_label": "卖出/回避",
+      "rank": 41
+    },
+    {
+      "symbol": "512710",
+      "name": "军工龙头ETF富国",
+      "market": "cn",
+      "theme": "军工龙头",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-14.60%",
+        "60日最大回撤偏大：-24.42%",
+        "年化波动率偏高：38.71%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 41.03,
+      "price": 0.62,
+      "change_1d_pct": -0.16,
+      "change_20d_pct": -5.49,
+      "change_60d_pct": -23.83,
+      "change_120d_pct": -27.99,
+      "volume_ratio": 0.93,
+      "turnover": null,
+      "max_drawdown_20d_pct": -14.6,
+      "max_drawdown_60d_pct": -24.42,
+      "volatility_20d_pct": 38.71,
+      "rsi_14": 67.33,
+      "distance_to_support_pct": 5.98,
+      "distance_to_resistance_pct": 24.84,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 13.92,
+        "flow": 50.64,
+        "risk": 49.45,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 16.86,
+      "action_label": "卖出/回避",
+      "rank": 42
+    },
+    {
+      "symbol": "561380",
+      "name": "电网设备ETF国泰",
+      "market": "cn",
+      "theme": "机械/设备",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-13.02%",
+        "60日最大回撤偏大：-29.58%",
+        "年化波动率偏高：49.15%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 40.87,
+      "price": 0.746,
+      "change_1d_pct": -0.53,
+      "change_20d_pct": -6.63,
+      "change_60d_pct": -21.06,
+      "change_120d_pct": -5.33,
+      "volume_ratio": 1.01,
+      "turnover": null,
+      "max_drawdown_20d_pct": -13.02,
+      "max_drawdown_60d_pct": -29.58,
+      "volatility_20d_pct": 49.15,
+      "rsi_14": 61.89,
+      "distance_to_support_pct": 8.43,
+      "distance_to_resistance_pct": 30.97,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 18.33,
+        "flow": 52.75,
+        "risk": 38.26,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 19.22,
+      "action_label": "卖出/回避",
+      "rank": 43
+    },
+    {
+      "symbol": "562500",
+      "name": "机器人ETF华夏",
+      "market": "cn",
+      "theme": "人工智能",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-18.50%",
+        "60日最大回撤偏大：-25.74%",
+        "年化波动率偏高：49.78%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 40.27,
+      "price": 1.009,
+      "change_1d_pct": -0.79,
+      "change_20d_pct": -9.02,
+      "change_60d_pct": -12.72,
+      "change_120d_pct": -5.17,
+      "volume_ratio": 0.8,
+      "turnover": null,
+      "max_drawdown_20d_pct": -18.5,
+      "max_drawdown_60d_pct": -25.74,
+      "volatility_20d_pct": 49.78,
+      "rsi_14": 56.48,
+      "distance_to_support_pct": 11.74,
+      "distance_to_resistance_pct": 20.52,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 24.39,
+        "flow": 47.08,
+        "risk": 31.7,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 27.55,
+      "action_label": "卖出/回避",
+      "rank": 44
     },
     {
       "symbol": "512660",
-      "name": "军工ETF",
+      "name": "军工ETF国泰",
       "market": "cn",
       "theme": "军工",
       "role": "sector",
-      "status": "sell",
-      "score": 33.66,
-      "price": 1.135,
-      "change_20d_pct": -8.69,
-      "change_60d_pct": -23.72,
-      "scores": {
-        "trend": 50,
-        "momentum": 2.62,
-        "flow": 50,
-        "risk": 20,
-        "event": 50
-      },
-      "reasons": [
-        "趋势或综合评分触发卖出/回避",
-        "价格站上 20 日均线"
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
       ],
+      "data_quality": "fallback",
       "warnings": [
-        "价格未站上 60 日均线",
-        "60 日动量为负：-23.72%",
-        "20 日最大回撤偏大：-17.64%",
-        "60 日最大回撤偏大：-25.65%",
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-17.64%",
+        "60日最大回撤偏大：-25.65%",
         "年化波动率偏高：43.35%"
       ],
-      "data_quality": "real"
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 38.3,
+      "price": 1.135,
+      "change_1d_pct": -0.09,
+      "change_20d_pct": -8.69,
+      "change_60d_pct": -23.72,
+      "change_120d_pct": -23.57,
+      "volume_ratio": 0.8,
+      "turnover": null,
+      "max_drawdown_20d_pct": -17.64,
+      "max_drawdown_60d_pct": -25.65,
+      "volatility_20d_pct": 43.35,
+      "rsi_14": 64.78,
+      "distance_to_support_pct": 7.58,
+      "distance_to_resistance_pct": 25.02,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 10.68,
+        "flow": 48.6,
+        "risk": 39.38,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 14.41,
+      "action_label": "卖出/回避",
+      "rank": 45
+    },
+    {
+      "symbol": "159530",
+      "name": "机器人ETF易方达",
+      "market": "cn",
+      "theme": "机器人/智能制造",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "20日最大回撤偏大：-20.46%",
+        "60日最大回撤偏大：-30.18%",
+        "年化波动率偏高：55.26%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 38.04,
+      "price": 1.402,
+      "change_1d_pct": -0.92,
+      "change_20d_pct": -9.55,
+      "change_60d_pct": -13.35,
+      "change_120d_pct": -10.59,
+      "volume_ratio": 0.78,
+      "turnover": null,
+      "max_drawdown_20d_pct": -20.46,
+      "max_drawdown_60d_pct": -30.18,
+      "volatility_20d_pct": 55.26,
+      "rsi_14": 56.6,
+      "distance_to_support_pct": 13.06,
+      "distance_to_resistance_pct": 26.68,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 21.17,
+        "flow": 48.99,
+        "risk": 19.63,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 24.51,
+      "action_label": "卖出/回避",
+      "rank": 46
+    },
+    {
+      "symbol": "515050",
+      "name": "通信ETF华夏",
+      "market": "cn",
+      "theme": "通信/5G",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上20日均线",
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-28.66%",
+        "60日最大回撤偏大：-38.78%",
+        "年化波动率偏高：87.00%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "长期趋势仍在"
+      ],
+      "status": "sell",
+      "score": 37.67,
+      "price": 1.01,
+      "change_1d_pct": 0.8,
+      "change_20d_pct": -21.22,
+      "change_60d_pct": -12.63,
+      "change_120d_pct": 31.34,
+      "volume_ratio": 0.83,
+      "turnover": null,
+      "max_drawdown_20d_pct": -28.66,
+      "max_drawdown_60d_pct": -38.78,
+      "volatility_20d_pct": 87.0,
+      "rsi_14": 46.18,
+      "distance_to_support_pct": 14.64,
+      "distance_to_resistance_pct": 42.48,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 26.2,
+        "flow": 47.0,
+        "risk": 11.48,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 24.22,
+      "action_label": "卖出/回避",
+      "rank": 47
+    },
+    {
+      "symbol": "515790",
+      "name": "光伏ETF华泰柏瑞",
+      "market": "cn",
+      "theme": "光伏",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "成交量低于60日均量，资金确认不足",
+        "20日最大回撤偏大：-12.49%",
+        "60日最大回撤偏大：-30.41%",
+        "年化波动率偏高：37.67%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 37.54,
+      "price": 0.845,
+      "change_1d_pct": -1.17,
+      "change_20d_pct": -7.45,
+      "change_60d_pct": -26.27,
+      "change_120d_pct": -26.97,
+      "volume_ratio": 0.59,
+      "turnover": null,
+      "max_drawdown_20d_pct": -12.49,
+      "max_drawdown_60d_pct": -30.41,
+      "volatility_20d_pct": 37.67,
+      "rsi_14": 61.65,
+      "distance_to_support_pct": 7.64,
+      "distance_to_resistance_pct": 33.49,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 9.85,
+        "flow": 38.46,
+        "risk": 49.25,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 12.06,
+      "action_label": "卖出/回避",
+      "rank": 48
+    },
+    {
+      "symbol": "159566",
+      "name": "储能电池ETF易方达",
+      "market": "cn",
+      "theme": "新能源/电池",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-12.78%",
+        "60日最大回撤偏大：-30.56%",
+        "年化波动率偏高：49.33%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线",
+        "成交量处于有效放大区间"
+      ],
+      "status": "sell",
+      "score": 37.48,
+      "price": 1.83,
+      "change_1d_pct": -1.4,
+      "change_20d_pct": -10.43,
+      "change_60d_pct": -25.58,
+      "change_120d_pct": -15.47,
+      "volume_ratio": 1.22,
+      "turnover": null,
+      "max_drawdown_20d_pct": -12.78,
+      "max_drawdown_60d_pct": -30.56,
+      "volatility_20d_pct": 49.33,
+      "rsi_14": 54.17,
+      "distance_to_support_pct": 5.96,
+      "distance_to_resistance_pct": 35.9,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 7.9,
+        "flow": 49.63,
+        "risk": 37.16,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 9.61,
+      "action_label": "卖出/回避",
+      "rank": 49
+    },
+    {
+      "symbol": "159227",
+      "name": "航空航天ETF华夏",
+      "market": "cn",
+      "theme": "汽车/智能车",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "近20日下跌日成交占优",
+        "20日最大回撤偏大：-18.67%",
+        "60日最大回撤偏大：-29.27%",
+        "年化波动率偏高：47.91%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 36.63,
+      "price": 1.005,
+      "change_1d_pct": 0.0,
+      "change_20d_pct": -7.12,
+      "change_60d_pct": -26.96,
+      "change_120d_pct": -32.41,
+      "volume_ratio": 0.73,
+      "turnover": null,
+      "max_drawdown_20d_pct": -18.67,
+      "max_drawdown_60d_pct": -29.27,
+      "volatility_20d_pct": 47.91,
+      "rsi_14": 68.18,
+      "distance_to_support_pct": 8.3,
+      "distance_to_resistance_pct": 30.55,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 9.76,
+        "flow": 47.53,
+        "risk": 31.21,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 11.86,
+      "action_label": "卖出/回避",
+      "rank": 50
+    },
+    {
+      "symbol": "159206",
+      "name": "卫星ETF永赢",
+      "market": "cn",
+      "theme": "自由现金流/质量",
+      "role": "sector",
+      "provider": "tencent_fqkline",
+      "source_errors": [
+        "akshare",
+        "eastmoney_kline"
+      ],
+      "data_quality": "fallback",
+      "warnings": [
+        "价格未站上60日均线",
+        "成交量低于60日均量，资金确认不足",
+        "20日最大回撤偏大：-32.87%",
+        "60日最大回撤偏大：-36.24%",
+        "年化波动率偏高：75.43%"
+      ],
+      "reasons": [
+        "趋势或风险触发卖出/回避",
+        "价格站上20日均线"
+      ],
+      "status": "sell",
+      "score": 29.81,
+      "price": 1.398,
+      "change_1d_pct": 1.82,
+      "change_20d_pct": -17.57,
+      "change_60d_pct": -30.1,
+      "change_120d_pct": -26.46,
+      "volume_ratio": 0.7,
+      "turnover": null,
+      "max_drawdown_20d_pct": -32.87,
+      "max_drawdown_60d_pct": -36.24,
+      "volatility_20d_pct": 75.43,
+      "rsi_14": 58.73,
+      "distance_to_support_pct": 16.02,
+      "distance_to_resistance_pct": 35.19,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 2.87,
+        "flow": 36.12,
+        "risk": 12.46,
+        "event": 50.0
+      },
+      "decision_stability": {
+        "applied": false,
+        "reason": ""
+      },
+      "relative_rank": 4.61,
+      "action_label": "卖出/回避",
+      "rank": 51
     }
   ],
   "summary": {
     "buy": [
       {
-        "symbol": "510880",
-        "name": "红利ETF",
+        "symbol": "512800",
+        "name": "银行ETF华宝",
         "market": "cn",
-        "theme": "红利",
-        "role": "defensive",
-        "status": "buy",
-        "score": 76.72,
-        "price": 3.288,
-        "change_20d_pct": 8.16,
-        "change_60d_pct": 1.36,
-        "scores": {
-          "trend": 100,
-          "momentum": 69.86,
-          "flow": 65,
-          "risk": 75,
-          "event": 50
-        },
+        "theme": "银行",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [],
         "reasons": [
           "综合评分进入买入候选区",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
+          "价格站上20日均线",
+          "价格站上60日均线",
           "长期趋势仍在",
-          "20 日动量为正：8.16%"
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间"
         ],
+        "status": "buy",
+        "score": 78.57,
+        "price": 0.81,
+        "change_1d_pct": 1.12,
+        "change_20d_pct": 6.44,
+        "change_60d_pct": 3.85,
+        "change_120d_pct": 3.98,
+        "volume_ratio": 1.09,
+        "turnover": null,
+        "max_drawdown_20d_pct": -4.64,
+        "max_drawdown_60d_pct": -9.83,
+        "volatility_20d_pct": 21.52,
+        "rsi_14": 57.78,
+        "distance_to_support_pct": 10.35,
+        "distance_to_resistance_pct": 3.7,
+        "scores": {
+          "trend": 100,
+          "momentum": 78.0,
+          "flow": 58.84,
+          "risk": 82.03,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 87.45,
+        "action_label": "买入候选",
+        "rank": 1
+      },
+      {
+        "symbol": "510650",
+        "name": "金融地产ETF华夏",
+        "market": "cn",
+        "theme": "金融/央企",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
         "warnings": [],
-        "data_quality": "real"
+        "reasons": [
+          "综合评分进入买入候选区",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
+        ],
+        "status": "buy",
+        "score": 75.94,
+        "price": 2.871,
+        "change_1d_pct": -0.28,
+        "change_20d_pct": 5.05,
+        "change_60d_pct": 3.46,
+        "change_120d_pct": -2.74,
+        "volume_ratio": 1.91,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.85,
+        "max_drawdown_60d_pct": -7.17,
+        "volatility_20d_pct": 18.92,
+        "rsi_14": 58.8,
+        "distance_to_support_pct": 8.63,
+        "distance_to_resistance_pct": 4.01,
+        "scores": {
+          "trend": 93.0,
+          "momentum": 72.15,
+          "flow": 62.76,
+          "risk": 83.01,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 81.08,
+        "action_label": "买入候选",
+        "rank": 2
+      },
+      {
+        "symbol": "515220",
+        "name": "煤炭ETF国泰",
+        "market": "cn",
+        "theme": "煤炭/资源",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "60日最大回撤偏大：-25.38%",
+          "年化波动率偏高：43.29%"
+        ],
+        "reasons": [
+          "综合评分进入买入候选区",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "长期趋势仍在",
+          "成交量处于有效放大区间"
+        ],
+        "status": "buy",
+        "score": 75.44,
+        "price": 1.243,
+        "change_1d_pct": 5.88,
+        "change_20d_pct": 11.08,
+        "change_60d_pct": 1.22,
+        "change_120d_pct": 6.6,
+        "volume_ratio": 1.27,
+        "turnover": null,
+        "max_drawdown_20d_pct": -5.33,
+        "max_drawdown_60d_pct": -25.38,
+        "volatility_20d_pct": 43.29,
+        "rsi_14": 65.4,
+        "distance_to_support_pct": 16.49,
+        "distance_to_resistance_pct": 15.04,
+        "scores": {
+          "trend": 100,
+          "momentum": 85.15,
+          "flow": 54.79,
+          "risk": 54.61,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 94.8,
+        "action_label": "买入候选",
+        "rank": 3
+      },
+      {
+        "symbol": "512890",
+        "name": "红利低波ETF华泰柏瑞",
+        "market": "cn",
+        "theme": "红利/资源",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [],
+        "reasons": [
+          "综合评分进入买入候选区",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
+        ],
+        "status": "buy",
+        "score": 74.36,
+        "price": 1.17,
+        "change_1d_pct": 0.52,
+        "change_20d_pct": 5.88,
+        "change_60d_pct": -0.59,
+        "change_120d_pct": 0.34,
+        "volume_ratio": 1.17,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.56,
+        "max_drawdown_60d_pct": -9.73,
+        "volatility_20d_pct": 17.39,
+        "rsi_14": 57.59,
+        "distance_to_support_pct": 9.65,
+        "distance_to_resistance_pct": 3.16,
+        "scores": {
+          "trend": 93.0,
+          "momentum": 70.16,
+          "flow": 57.0,
+          "risk": 83.5,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 78.33,
+        "action_label": "买入候选",
+        "rank": 4
       }
     ],
     "sell": [
       {
-        "symbol": "515050",
-        "name": "5GETF",
+        "symbol": "516510",
+        "name": "云计算ETF易方达",
         "market": "cn",
-        "theme": "通信",
+        "theme": "云计算/科技",
         "role": "sector",
-        "status": "sell",
-        "score": 39.93,
-        "price": 1.014,
-        "change_20d_pct": -20.9,
-        "change_60d_pct": -12.28,
-        "scores": {
-          "trend": 50,
-          "momentum": 27.72,
-          "flow": 50,
-          "risk": 20,
-          "event": 50
-        },
-        "reasons": [
-          "趋势或综合评分触发卖出/回避",
-          "长期趋势仍在"
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
         ],
+        "data_quality": "fallback",
         "warnings": [
-          "价格未站上 20 日均线",
-          "价格未站上 60 日均线",
-          "60 日动量为负：-12.28%",
-          "20 日最大回撤偏大：-28.66%",
-          "60 日最大回撤偏大：-38.78%"
+          "20日最大回撤偏大：-14.39%",
+          "60日最大回撤偏大：-19.06%",
+          "年化波动率偏高：54.13%"
         ],
-        "data_quality": "real"
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "长期趋势仍在",
+          "成交量处于有效放大区间"
+        ],
+        "status": "sell",
+        "score": 57.18,
+        "price": 1.76,
+        "change_1d_pct": -0.96,
+        "change_20d_pct": -2.49,
+        "change_60d_pct": -11.47,
+        "change_120d_pct": -3.67,
+        "volume_ratio": 1.27,
+        "turnover": null,
+        "max_drawdown_20d_pct": -14.39,
+        "max_drawdown_60d_pct": -19.06,
+        "volatility_20d_pct": 54.13,
+        "rsi_14": 59.85,
+        "distance_to_support_pct": 12.89,
+        "distance_to_resistance_pct": 9.43,
+        "scores": {
+          "trend": 85.0,
+          "momentum": 39.2,
+          "flow": 54.29,
+          "risk": 40.12,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 43.53,
+        "action_label": "卖出/回避",
+        "rank": 23
       },
       {
-        "symbol": "159915",
-        "name": "创业板ETF",
+        "symbol": "159516",
+        "name": "半导体设备ETF国泰",
         "market": "cn",
-        "theme": "创业板",
-        "role": "broad",
-        "status": "sell",
-        "score": 38.28,
-        "price": 3.54,
-        "change_20d_pct": -12.38,
-        "change_60d_pct": -12.55,
-        "scores": {
-          "trend": 50,
-          "momentum": 21.14,
-          "flow": 50,
-          "risk": 20,
-          "event": 50
-        },
-        "reasons": [
-          "趋势或综合评分触发卖出/回避",
-          "长期趋势仍在"
+        "theme": "半导体设备",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
         ],
+        "data_quality": "fallback",
         "warnings": [
-          "价格未站上 20 日均线",
-          "价格未站上 60 日均线",
-          "60 日动量为负：-12.55%",
-          "20 日最大回撤偏大：-15.44%",
-          "60 日最大回撤偏大：-25.60%"
+          "价格未站上20日均线",
+          "价格未站上60日均线",
+          "近20日下跌日成交占优",
+          "20日最大回撤偏大：-33.15%",
+          "60日最大回撤偏大：-39.32%",
+          "年化波动率偏高：95.25%"
         ],
-        "data_quality": "real"
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "长期趋势仍在",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "sell",
+        "score": 53.97,
+        "price": 0.72,
+        "change_1d_pct": 2.71,
+        "change_20d_pct": -26.0,
+        "change_60d_pct": 23.08,
+        "change_120d_pct": 60.0,
+        "volume_ratio": 1.68,
+        "turnover": null,
+        "max_drawdown_20d_pct": -33.15,
+        "max_drawdown_60d_pct": -39.32,
+        "volatility_20d_pct": 95.25,
+        "rsi_14": 51.83,
+        "distance_to_support_pct": 26.09,
+        "distance_to_resistance_pct": 38.47,
+        "scores": {
+          "trend": 73.0,
+          "momentum": 58.22,
+          "flow": 54.31,
+          "risk": 10.99,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 56.76,
+        "action_label": "卖出/回避",
+        "rank": 28
       },
       {
-        "symbol": "512660",
-        "name": "军工ETF",
+        "symbol": "560660",
+        "name": "云计算50ETF新华",
         "market": "cn",
-        "theme": "军工",
+        "theme": "国企/央企",
         "role": "sector",
-        "status": "sell",
-        "score": 33.66,
-        "price": 1.135,
-        "change_20d_pct": -8.69,
-        "change_60d_pct": -23.72,
-        "scores": {
-          "trend": 50,
-          "momentum": 2.62,
-          "flow": 50,
-          "risk": 20,
-          "event": 50
-        },
-        "reasons": [
-          "趋势或综合评分触发卖出/回避",
-          "价格站上 20 日均线"
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
         ],
+        "data_quality": "fallback",
         "warnings": [
-          "价格未站上 60 日均线",
-          "60 日动量为负：-23.72%",
-          "20 日最大回撤偏大：-17.64%",
-          "60 日最大回撤偏大：-25.65%",
-          "年化波动率偏高：43.35%"
+          "价格未站上60日均线",
+          "20日最大回撤偏大：-17.41%",
+          "60日最大回撤偏大：-19.08%",
+          "年化波动率偏高：61.94%"
         ],
-        "data_quality": "real"
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线",
+          "长期趋势仍在"
+        ],
+        "status": "sell",
+        "score": 53.13,
+        "price": 1.14,
+        "change_1d_pct": -0.44,
+        "change_20d_pct": -5.08,
+        "change_60d_pct": -10.73,
+        "change_120d_pct": 6.05,
+        "volume_ratio": 0.9,
+        "turnover": null,
+        "max_drawdown_20d_pct": -17.41,
+        "max_drawdown_60d_pct": -19.08,
+        "volatility_20d_pct": 61.94,
+        "rsi_14": 57.43,
+        "distance_to_support_pct": 13.89,
+        "distance_to_resistance_pct": 8.51,
+        "scores": {
+          "trend": 80.0,
+          "momentum": 38.99,
+          "flow": 49.8,
+          "risk": 29.51,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 43.63,
+        "action_label": "卖出/回避",
+        "rank": 30
+      },
+      {
+        "symbol": "515400",
+        "name": "大数据ETF富国",
+        "market": "cn",
+        "theme": "大数据/科技",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "20日最大回撤偏大：-15.68%",
+          "60日最大回撤偏大：-23.86%",
+          "年化波动率偏高：54.69%"
+        ],
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "sell",
+        "score": 48.65,
+        "price": 0.908,
+        "change_1d_pct": -0.77,
+        "change_20d_pct": -2.58,
+        "change_60d_pct": -15.85,
+        "change_120d_pct": -11.93,
+        "volume_ratio": 1.14,
+        "turnover": null,
+        "max_drawdown_20d_pct": -15.68,
+        "max_drawdown_60d_pct": -23.86,
+        "volatility_20d_pct": 54.69,
+        "rsi_14": 60.77,
+        "distance_to_support_pct": 13.36,
+        "distance_to_resistance_pct": 15.86,
+        "scores": {
+          "trend": 70.0,
+          "momentum": 29.05,
+          "flow": 52.14,
+          "risk": 33.07,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 30.78,
+        "action_label": "卖出/回避",
+        "rank": 35
+      },
+      {
+        "symbol": "512760",
+        "name": "芯片ETF国泰",
+        "market": "cn",
+        "theme": "芯片",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上20日均线",
+          "价格未站上60日均线",
+          "20日最大回撤偏大：-31.22%",
+          "60日最大回撤偏大：-37.16%",
+          "年化波动率偏高：80.38%"
+        ],
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "长期趋势仍在"
+        ],
+        "status": "sell",
+        "score": 47.39,
+        "price": 1.13,
+        "change_1d_pct": 1.62,
+        "change_20d_pct": -27.1,
+        "change_60d_pct": 0.27,
+        "change_120d_pct": 27.83,
+        "volume_ratio": 0.79,
+        "turnover": null,
+        "max_drawdown_20d_pct": -31.22,
+        "max_drawdown_60d_pct": -37.16,
+        "volatility_20d_pct": 80.38,
+        "rsi_14": 48.04,
+        "distance_to_support_pct": 13.45,
+        "distance_to_resistance_pct": 40.27,
+        "scores": {
+          "trend": 65.0,
+          "momentum": 45.76,
+          "flow": 48.29,
+          "risk": 11.97,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 50.49,
+        "action_label": "卖出/回避",
+        "rank": 36
+      },
+      {
+        "symbol": "159667",
+        "name": "工业母机ETF国泰",
+        "market": "cn",
+        "theme": "工业母机/高端制造",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上60日均线",
+          "20日最大回撤偏大：-27.95%",
+          "60日最大回撤偏大：-36.89%",
+          "年化波动率偏高：73.26%"
+        ],
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线",
+          "长期趋势仍在",
+          "成交量处于有效放大区间"
+        ],
+        "status": "sell",
+        "score": 44.68,
+        "price": 0.68,
+        "change_1d_pct": 2.41,
+        "change_20d_pct": -16.67,
+        "change_60d_pct": -12.6,
+        "change_120d_pct": 17.24,
+        "volume_ratio": 1.86,
+        "turnover": null,
+        "max_drawdown_20d_pct": -27.95,
+        "max_drawdown_60d_pct": -36.89,
+        "volatility_20d_pct": 73.26,
+        "rsi_14": 53.14,
+        "distance_to_support_pct": 17.24,
+        "distance_to_resistance_pct": 35.15,
+        "scores": {
+          "trend": 65.0,
+          "momentum": 26.0,
+          "flow": 58.67,
+          "risk": 12.95,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 27.06,
+        "action_label": "卖出/回避",
+        "rank": 37
+      },
+      {
+        "symbol": "560710",
+        "name": "船舶ETF富国",
+        "market": "cn",
+        "theme": "中证/央企",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "partial",
+        "warnings": [
+          "价格未站上60日均线",
+          "成交量低于60日均量，资金确认不足",
+          "20日最大回撤偏大：-10.50%",
+          "60日最大回撤偏大：-24.05%",
+          "历史窗口较短，降低信号置信度"
+        ],
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线"
+        ],
+        "status": "sell",
+        "score": 44.6,
+        "price": 0.89,
+        "change_1d_pct": -0.34,
+        "change_20d_pct": 0.79,
+        "change_60d_pct": -20.82,
+        "change_120d_pct": null,
+        "volume_ratio": 0.46,
+        "turnover": null,
+        "max_drawdown_20d_pct": -10.5,
+        "max_drawdown_60d_pct": -24.05,
+        "volatility_20d_pct": 34.32,
+        "rsi_14": 75.0,
+        "distance_to_support_pct": 8.8,
+        "distance_to_resistance_pct": 21.01,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 31.7,
+          "flow": 37.75,
+          "risk": 60.82,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 30.88,
+        "action_label": "卖出/回避",
+        "rank": 38
+      },
+      {
+        "symbol": "159755",
+        "name": "电池ETF广发",
+        "market": "cn",
+        "theme": "电池/新能源",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上60日均线",
+          "近20日下跌日成交占优",
+          "20日最大回撤偏大：-8.69%",
+          "60日最大回撤偏大：-23.94%",
+          "年化波动率偏高：39.96%"
+        ],
+        "reasons": [
+          "趋势或风险触发卖出/回避",
+          "价格站上20日均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "sell",
+        "score": 44.41,
+        "price": 0.96,
+        "change_1d_pct": -1.13,
+        "change_20d_pct": -4.38,
+        "change_60d_pct": -20.6,
+        "change_120d_pct": -9.77,
+        "volume_ratio": 1.23,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.69,
+        "max_drawdown_60d_pct": -23.94,
+        "volatility_20d_pct": 39.96,
+        "rsi_14": 57.74,
+        "distance_to_support_pct": 7.5,
+        "distance_to_resistance_pct": 22.29,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 22.52,
+          "flow": 50.7,
+          "risk": 57.6,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 24.46,
+        "action_label": "卖出/回避",
+        "rank": 39
       }
     ],
     "watch": [
       {
-        "symbol": "512880",
-        "name": "证券ETF",
+        "symbol": "515230",
+        "name": "软件ETF国泰",
         "market": "cn",
-        "theme": "证券",
+        "theme": "软件/科技",
         "role": "sector",
-        "status": "watch",
-        "score": 57.19,
-        "price": 1.096,
-        "change_20d_pct": -3.18,
-        "change_60d_pct": 0.09,
-        "scores": {
-          "trend": 70,
-          "momentum": 39.74,
-          "flow": 50,
-          "risk": 75,
-          "event": 50
-        },
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "20日最大回撤偏大：-8.65%",
+          "60日最大回撤偏大：-24.15%",
+          "年化波动率偏高：41.87%"
+        ],
         "reasons": [
           "信号不足，等待确认",
-          "价格站上 60 日均线"
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
         ],
-        "warnings": [
-          "价格未站上 20 日均线"
-        ],
-        "data_quality": "real"
+        "status": "watch",
+        "score": 59.46,
+        "price": 0.747,
+        "change_1d_pct": -0.93,
+        "change_20d_pct": 7.64,
+        "change_60d_pct": -13.94,
+        "change_120d_pct": -21.04,
+        "volume_ratio": 1.62,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.65,
+        "max_drawdown_60d_pct": -24.15,
+        "volatility_20d_pct": 41.87,
+        "rsi_14": 73.13,
+        "distance_to_support_pct": 15.99,
+        "distance_to_resistance_pct": 13.65,
+        "scores": {
+          "trend": 70.0,
+          "momentum": 50.09,
+          "flow": 62.69,
+          "risk": 55.98,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 55.2,
+        "action_label": "观察",
+        "rank": 21
       },
       {
-        "symbol": "512760",
-        "name": "芯片ETF",
+        "symbol": "512400",
+        "name": "有色金属ETF南方",
         "market": "cn",
-        "theme": "芯片",
+        "theme": "有色金属",
         "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "20日最大回撤偏大：-8.40%",
+          "60日最大回撤偏大：-24.59%",
+          "年化波动率偏高：51.77%"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
+        ],
         "status": "watch",
-        "score": 50.0,
-        "price": null,
-        "change_20d_pct": null,
-        "change_60d_pct": null,
+        "score": 59.24,
+        "price": 1.917,
+        "change_1d_pct": 0.74,
+        "change_20d_pct": 9.86,
+        "change_60d_pct": -13.22,
+        "change_120d_pct": -14.91,
+        "volume_ratio": 1.46,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.4,
+        "max_drawdown_60d_pct": -24.59,
+        "volatility_20d_pct": 51.77,
+        "rsi_14": 72.41,
+        "distance_to_support_pct": 17.97,
+        "distance_to_resistance_pct": 12.42,
         "scores": {
-          "trend": 50.0,
-          "momentum": 50.0,
-          "flow": 50.0,
-          "risk": 50.0,
+          "trend": 70.0,
+          "momentum": 57.24,
+          "flow": 59.91,
+          "risk": 46.34,
           "event": 50.0
         },
-        "reasons": [
-          "数据不足，保持观察"
-        ],
-        "warnings": [
-          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512760 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-          "历史数据不足，暂不生成交易信号"
-        ],
-        "data_quality": "missing"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 62.65,
+        "action_label": "观察",
+        "rank": 22
       },
       {
-        "symbol": "512480",
-        "name": "半导体ETF",
+        "symbol": "513090",
+        "name": "香港证券ETF易方达",
         "market": "cn",
-        "theme": "半导体",
+        "theme": "港股科技",
         "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上20日均线",
+          "成交量低于60日均量，资金确认不足"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上60日均线",
+          "短期均线强于中期均线"
+        ],
         "status": "watch",
-        "score": 50.0,
-        "price": null,
-        "change_20d_pct": null,
-        "change_60d_pct": null,
+        "score": 56.67,
+        "price": 1.825,
+        "change_1d_pct": -1.3,
+        "change_20d_pct": -0.82,
+        "change_60d_pct": -2.04,
+        "change_120d_pct": -12.55,
+        "volume_ratio": 0.4,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.8,
+        "max_drawdown_60d_pct": -7.63,
+        "volatility_20d_pct": 24.92,
+        "rsi_14": 53.99,
+        "distance_to_support_pct": 6.48,
+        "distance_to_resistance_pct": 3.95,
         "scores": {
-          "trend": 50.0,
-          "momentum": 50.0,
-          "flow": 50.0,
-          "risk": 50.0,
+          "trend": 63.0,
+          "momentum": 52.84,
+          "flow": 38.48,
+          "risk": 79.09,
           "event": 50.0
         },
-        "reasons": [
-          "数据不足，保持观察"
-        ],
-        "warnings": [
-          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512480 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-          "历史数据不足，暂不生成交易信号"
-        ],
-        "data_quality": "missing"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 61.47,
+        "action_label": "观察",
+        "rank": 24
       },
       {
-        "symbol": "515790",
-        "name": "光伏ETF",
+        "symbol": "159766",
+        "name": "旅游ETF富国",
         "market": "cn",
-        "theme": "光伏",
+        "theme": "旅游/消费",
         "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上60日均线",
+          "60日最大回撤偏大：-15.69%"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线",
+          "近20日上涨日成交占优"
+        ],
         "status": "watch",
-        "score": 50.0,
-        "price": null,
-        "change_20d_pct": null,
-        "change_60d_pct": null,
+        "score": 56.0,
+        "price": 0.571,
+        "change_1d_pct": -0.52,
+        "change_20d_pct": 6.53,
+        "change_60d_pct": -11.2,
+        "change_120d_pct": -30.7,
+        "volume_ratio": 0.74,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.41,
+        "max_drawdown_60d_pct": -15.69,
+        "volatility_20d_pct": 26.87,
+        "rsi_14": 65.91,
+        "distance_to_support_pct": 7.33,
+        "distance_to_resistance_pct": 10.51,
         "scores": {
           "trend": 50.0,
-          "momentum": 50.0,
-          "flow": 50.0,
-          "risk": 50.0,
+          "momentum": 52.51,
+          "flow": 56.25,
+          "risk": 77.49,
           "event": 50.0
         },
-        "reasons": [
-          "数据不足，保持观察"
-        ],
-        "warnings": [
-          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.515790 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-          "历史数据不足，暂不生成交易信号"
-        ],
-        "data_quality": "missing"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 61.37,
+        "action_label": "观察",
+        "rank": 25
       },
       {
-        "symbol": "516160",
-        "name": "新能源ETF",
+        "symbol": "512980",
+        "name": "传媒ETF广发",
         "market": "cn",
-        "theme": "新能源",
+        "theme": "传媒",
         "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "20日最大回撤偏大：-11.34%",
+          "60日最大回撤偏大：-25.55%",
+          "年化波动率偏高：49.42%"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
+        ],
         "status": "watch",
-        "score": 50.0,
-        "price": null,
-        "change_20d_pct": null,
-        "change_60d_pct": null,
+        "score": 55.78,
+        "price": 0.865,
+        "change_1d_pct": -1.82,
+        "change_20d_pct": 6.13,
+        "change_60d_pct": -15.53,
+        "change_120d_pct": -27.0,
+        "volume_ratio": 1.54,
+        "turnover": null,
+        "max_drawdown_20d_pct": -11.34,
+        "max_drawdown_60d_pct": -25.55,
+        "volatility_20d_pct": 49.42,
+        "rsi_14": 67.97,
+        "distance_to_support_pct": 16.42,
+        "distance_to_resistance_pct": 15.38,
         "scores": {
-          "trend": 50.0,
-          "momentum": 50.0,
-          "flow": 50.0,
-          "risk": 50.0,
+          "trend": 70.0,
+          "momentum": 42.7,
+          "flow": 63.04,
+          "risk": 43.29,
           "event": 50.0
         },
-        "reasons": [
-          "数据不足，保持观察"
-        ],
-        "warnings": [
-          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.516160 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-          "历史数据不足，暂不生成交易信号"
-        ],
-        "data_quality": "missing"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 46.86,
+        "action_label": "观察",
+        "rank": 26
       },
       {
-        "symbol": "588000",
-        "name": "科创50ETF",
+        "symbol": "159611",
+        "name": "电力ETF广发",
         "market": "cn",
-        "theme": "科创",
-        "role": "broad",
+        "theme": "电力/绿电",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上60日均线",
+          "60日最大回撤偏大：-19.97%"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线",
+          "近20日上涨日成交占优"
+        ],
         "status": "watch",
-        "score": 50.0,
-        "price": null,
-        "change_20d_pct": null,
-        "change_60d_pct": null,
+        "score": 54.23,
+        "price": 1.059,
+        "change_1d_pct": -0.84,
+        "change_20d_pct": 5.16,
+        "change_60d_pct": -11.9,
+        "change_120d_pct": 2.32,
+        "volume_ratio": 0.84,
+        "turnover": null,
+        "max_drawdown_20d_pct": -4.09,
+        "max_drawdown_60d_pct": -19.97,
+        "volatility_20d_pct": 28.97,
+        "rsi_14": 56.37,
+        "distance_to_support_pct": 5.27,
+        "distance_to_resistance_pct": 18.7,
         "scores": {
           "trend": 50.0,
-          "momentum": 50.0,
-          "flow": 50.0,
-          "risk": 50.0,
+          "momentum": 51.78,
+          "flow": 52.64,
+          "risk": 71.68,
           "event": 50.0
         },
-        "reasons": [
-          "数据不足，保持观察"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 53.73,
+        "action_label": "观察",
+        "rank": 27
+      },
+      {
+        "symbol": "562550",
+        "name": "绿电ETF华夏",
+        "market": "cn",
+        "theme": "机器人/高端制造",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
         ],
+        "data_quality": "fallback",
         "warnings": [
-          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.588000 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
-          "历史数据不足，暂不生成交易信号"
+          "价格未站上60日均线",
+          "60日最大回撤偏大：-19.81%"
         ],
-        "data_quality": "missing"
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线"
+        ],
+        "status": "watch",
+        "score": 53.88,
+        "price": 1.152,
+        "change_1d_pct": -0.6,
+        "change_20d_pct": 4.92,
+        "change_60d_pct": -11.66,
+        "change_120d_pct": 2.86,
+        "volume_ratio": 0.75,
+        "turnover": null,
+        "max_drawdown_20d_pct": -4.1,
+        "max_drawdown_60d_pct": -19.81,
+        "volatility_20d_pct": 27.59,
+        "rsi_14": 56.13,
+        "distance_to_support_pct": 5.01,
+        "distance_to_resistance_pct": 18.75,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.9,
+          "flow": 51.52,
+          "risk": 72.31,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 52.16,
+        "action_label": "观察",
+        "rank": 29
+      },
+      {
+        "symbol": "159869",
+        "name": "游戏ETF华夏",
+        "market": "cn",
+        "theme": "游戏/传媒",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "20日最大回撤偏大：-11.96%",
+          "60日最大回撤偏大：-22.40%",
+          "年化波动率偏高：52.10%"
+        ],
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "watch",
+        "score": 52.58,
+        "price": 1.135,
+        "change_1d_pct": -1.82,
+        "change_20d_pct": 2.99,
+        "change_60d_pct": -14.27,
+        "change_120d_pct": -25.72,
+        "volume_ratio": 1.31,
+        "turnover": null,
+        "max_drawdown_20d_pct": -11.96,
+        "max_drawdown_60d_pct": -22.4,
+        "volatility_20d_pct": 52.1,
+        "rsi_14": 60.63,
+        "distance_to_support_pct": 14.19,
+        "distance_to_resistance_pct": 12.86,
+        "scores": {
+          "trend": 70.0,
+          "momentum": 36.61,
+          "flow": 55.4,
+          "risk": 42.31,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 39.12,
+        "action_label": "观察",
+        "rank": 31
       }
     ],
     "hold": [
@@ -736,55 +3862,156 @@
         "market": "us",
         "theme": "Nasdaq 100",
         "role": "core",
+        "provider": "yfinance",
+        "source_errors": [],
+        "data_quality": "real",
+        "warnings": [
+          "近20日下跌日成交占优",
+          "20日最大回撤偏大：-8.77%",
+          "买入结论缺少量能确认，降级为持有"
+        ],
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "长期趋势仍在",
+          "成交量处于有效放大区间"
+        ],
         "status": "hold",
-        "score": 74.58,
+        "score": 77.6,
         "price": 295.35,
+        "change_1d_pct": -0.9,
         "change_20d_pct": 0.85,
         "change_60d_pct": 0.98,
+        "change_120d_pct": 17.3,
+        "volume_ratio": 1.14,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.77,
+        "max_drawdown_60d_pct": -11.2,
+        "volatility_20d_pct": 26.45,
+        "rsi_14": 54.06,
+        "distance_to_support_pct": 8.38,
+        "distance_to_resistance_pct": 3.9,
         "scores": {
           "trend": 100,
-          "momentum": 61.32,
-          "flow": 65,
-          "risk": 75,
-          "event": 50
+          "momentum": 81.31,
+          "flow": 49.6,
+          "risk": 82.34,
+          "event": 50.0
         },
-        "reasons": [
-          "趋势尚未破坏，维持持有",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
-          "长期趋势仍在",
-          "20 日动量为正：0.85%"
-        ],
-        "warnings": [],
-        "data_quality": "real"
+        "decision_stability": {
+          "applied": true,
+          "reason": "买入结论缺少量能确认，降级为持有"
+        },
+        "relative_rank": 100.0,
+        "action_label": "持有",
+        "rank": 1
       },
       {
-        "symbol": "512800",
-        "name": "银行ETF",
+        "symbol": "159992",
+        "name": "创新药ETF银华",
         "market": "cn",
-        "theme": "银行",
+        "theme": "创新药/医药",
         "role": "sector",
-        "status": "hold",
-        "score": 72.86,
-        "price": 0.805,
-        "change_20d_pct": 5.78,
-        "change_60d_pct": 3.21,
-        "scores": {
-          "trend": 100,
-          "momentum": 66.44,
-          "flow": 50,
-          "risk": 75,
-          "event": 50
-        },
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上20日均线",
+          "20日最大回撤偏大：-9.10%",
+          "年化波动率偏高：45.83%"
+        ],
         "reasons": [
           "趋势尚未破坏，维持持有",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
+          "价格站上60日均线",
           "长期趋势仍在",
-          "20 日动量为正：5.78%"
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
         ],
-        "warnings": [],
-        "data_quality": "real"
+        "status": "hold",
+        "score": 69.47,
+        "price": 0.854,
+        "change_1d_pct": -1.39,
+        "change_20d_pct": 3.02,
+        "change_60d_pct": 3.02,
+        "change_120d_pct": 2.64,
+        "volume_ratio": 0.9,
+        "turnover": null,
+        "max_drawdown_20d_pct": -9.1,
+        "max_drawdown_60d_pct": -11.96,
+        "volatility_20d_pct": 45.83,
+        "rsi_14": 52.44,
+        "distance_to_support_pct": 20.79,
+        "distance_to_resistance_pct": 6.79,
+        "scores": {
+          "trend": 93.0,
+          "momentum": 68.16,
+          "flow": 52.65,
+          "risk": 59.99,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 75.59,
+        "action_label": "持有",
+        "rank": 5
+      },
+      {
+        "symbol": "560080",
+        "name": "中药ETF汇添富",
+        "market": "cn",
+        "theme": "央企/红利",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上20日均线"
+        ],
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上60日均线",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "hold",
+        "score": 69.3,
+        "price": 0.987,
+        "change_1d_pct": -0.7,
+        "change_20d_pct": 7.4,
+        "change_60d_pct": -0.7,
+        "change_120d_pct": -6.62,
+        "volume_ratio": 1.35,
+        "turnover": null,
+        "max_drawdown_20d_pct": -6.41,
+        "max_drawdown_60d_pct": -12.87,
+        "volatility_20d_pct": 29.5,
+        "rsi_14": 46.85,
+        "distance_to_support_pct": 14.77,
+        "distance_to_resistance_pct": 4.36,
+        "scores": {
+          "trend": 78.0,
+          "momentum": 73.05,
+          "flow": 56.44,
+          "risk": 75.66,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 83.43,
+        "action_label": "持有",
+        "rank": 6
       },
       {
         "symbol": "QQQ",
@@ -792,89 +4019,306 @@
         "market": "us",
         "theme": "Nasdaq 100",
         "role": "core",
+        "provider": "yfinance",
+        "source_errors": [],
+        "data_quality": "real",
+        "warnings": [
+          "20日最大回撤偏大：-8.79%"
+        ],
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "长期趋势仍在"
+        ],
         "status": "hold",
-        "score": 71.56,
+        "score": 68.56,
         "price": 717.3,
+        "change_1d_pct": -0.9,
         "change_20d_pct": 0.82,
         "change_60d_pct": 0.96,
+        "change_120d_pct": 17.27,
+        "volume_ratio": 0.74,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.79,
+        "max_drawdown_60d_pct": -11.22,
+        "volatility_20d_pct": 26.56,
+        "rsi_14": 54.05,
+        "distance_to_support_pct": 8.4,
+        "distance_to_resistance_pct": 3.91,
         "scores": {
           "trend": 100,
-          "momentum": 61.25,
-          "flow": 50,
-          "risk": 75,
-          "event": 50
+          "momentum": 53.78,
+          "flow": 48.21,
+          "risk": 69.81,
+          "event": 50.0
         },
-        "reasons": [
-          "趋势尚未破坏，维持持有",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
-          "长期趋势仍在",
-          "20 日动量为正：0.82%"
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 50.0,
+        "action_label": "持有",
+        "rank": 2
+      },
+      {
+        "symbol": "515170",
+        "name": "食品饮料ETF华夏",
+        "market": "cn",
+        "theme": "食品饮料",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
         ],
+        "data_quality": "fallback",
         "warnings": [],
-        "data_quality": "real"
-      },
-      {
-        "symbol": "512010",
-        "name": "医药ETF",
-        "market": "cn",
-        "theme": "医药",
-        "role": "sector",
-        "status": "hold",
-        "score": 70.56,
-        "price": 0.379,
-        "change_20d_pct": 6.46,
-        "change_60d_pct": 2.43,
-        "scores": {
-          "trend": 100,
-          "momentum": 65.22,
-          "flow": 40,
-          "risk": 75,
-          "event": 50
-        },
         "reasons": [
           "趋势尚未破坏，维持持有",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间"
+        ],
+        "status": "hold",
+        "score": 68.25,
+        "price": 0.473,
+        "change_1d_pct": -0.42,
+        "change_20d_pct": 9.49,
+        "change_60d_pct": -5.21,
+        "change_120d_pct": -15.84,
+        "volume_ratio": 1.06,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.47,
+        "max_drawdown_60d_pct": -13.83,
+        "volatility_20d_pct": 26.95,
+        "rsi_14": 60.71,
+        "distance_to_support_pct": 10.0,
+        "distance_to_resistance_pct": 5.5,
+        "scores": {
+          "trend": 78.0,
+          "momentum": 70.23,
+          "flow": 53.24,
+          "risk": 77.62,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 81.18,
+        "action_label": "持有",
+        "rank": 7
+      },
+      {
+        "symbol": "159985",
+        "name": "豆粕ETF华夏",
+        "market": "cn",
+        "theme": "豆粕/商品",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "价格未站上20日均线",
+          "20日最大回撤偏大：-8.86%"
+        ],
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上60日均线",
           "长期趋势仍在",
-          "20 日动量为正：6.46%"
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间"
         ],
-        "warnings": [
-          "成交量低于 60 日均量，资金确认不足"
-        ],
-        "data_quality": "real"
+        "status": "hold",
+        "score": 67.98,
+        "price": 2.119,
+        "change_1d_pct": 1.05,
+        "change_20d_pct": -1.76,
+        "change_60d_pct": -1.94,
+        "change_120d_pct": 7.29,
+        "volume_ratio": 0.95,
+        "turnover": null,
+        "max_drawdown_20d_pct": -8.86,
+        "max_drawdown_60d_pct": -8.86,
+        "volatility_20d_pct": 33.19,
+        "rsi_14": 49.54,
+        "distance_to_support_pct": 7.02,
+        "distance_to_resistance_pct": 8.07,
+        "scores": {
+          "trend": 93.0,
+          "momentum": 55.35,
+          "flow": 51.91,
+          "risk": 72.4,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 61.67,
+        "action_label": "持有",
+        "rank": 8
       },
       {
-        "symbol": "159928",
-        "name": "消费ETF",
+        "symbol": "159945",
+        "name": "能源ETF广发",
         "market": "cn",
-        "theme": "消费",
+        "theme": "能源/商品",
         "role": "sector",
-        "status": "hold",
-        "score": 60.09,
-        "price": 0.669,
-        "change_20d_pct": 8.25,
-        "change_60d_pct": -6.95,
-        "scores": {
-          "trend": 70,
-          "momentum": 51.36,
-          "flow": 65,
-          "risk": 55,
-          "event": 50
-        },
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
+        "warnings": [
+          "成交量低于60日均量，资金确认不足",
+          "60日最大回撤偏大：-18.93%",
+          "年化波动率偏高：37.68%"
+        ],
         "reasons": [
           "趋势尚未破坏，维持持有",
-          "价格站上 20 日均线",
-          "价格站上 60 日均线",
-          "20 日动量为正：8.25%",
-          "成交量高于 60 日均量，资金关注度改善"
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "长期趋势仍在",
+          "近20日上涨日成交占优"
         ],
+        "status": "hold",
+        "score": 67.6,
+        "price": 1.35,
+        "change_1d_pct": 2.82,
+        "change_20d_pct": 8.78,
+        "change_60d_pct": -1.32,
+        "change_120d_pct": 1.73,
+        "volume_ratio": 0.69,
+        "turnover": null,
+        "max_drawdown_20d_pct": -3.34,
+        "max_drawdown_60d_pct": -18.93,
+        "volatility_20d_pct": 37.68,
+        "rsi_14": 66.88,
+        "distance_to_support_pct": 15.48,
+        "distance_to_resistance_pct": 6.81,
+        "scores": {
+          "trend": 85.0,
+          "momentum": 76.48,
+          "flow": 40.52,
+          "risk": 65.81,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 85.69,
+        "action_label": "持有",
+        "rank": 9
+      },
+      {
+        "symbol": "512690",
+        "name": "酒ETF鹏华",
+        "market": "cn",
+        "theme": "酒/消费",
+        "role": "sector",
+        "provider": "tencent_fqkline",
+        "source_errors": [
+          "akshare",
+          "eastmoney_kline"
+        ],
+        "data_quality": "fallback",
         "warnings": [
-          "60 日动量为负：-6.95%",
-          "60 日最大回撤偏大：-16.25%"
+          "60日最大回撤偏大：-17.81%",
+          "年化波动率偏高：35.26%"
         ],
-        "data_quality": "real"
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上20日均线",
+          "价格站上60日均线",
+          "短期均线强于中期均线",
+          "成交量处于有效放大区间",
+          "近20日上涨日成交占优"
+        ],
+        "status": "hold",
+        "score": 67.54,
+        "price": 0.434,
+        "change_1d_pct": -0.69,
+        "change_20d_pct": 13.32,
+        "change_60d_pct": -6.06,
+        "change_120d_pct": -22.78,
+        "volume_ratio": 0.97,
+        "turnover": null,
+        "max_drawdown_20d_pct": -4.19,
+        "max_drawdown_60d_pct": -17.81,
+        "volatility_20d_pct": 35.26,
+        "rsi_14": 60.4,
+        "distance_to_support_pct": 13.32,
+        "distance_to_resistance_pct": 7.37,
+        "scores": {
+          "trend": 78.0,
+          "momentum": 70.97,
+          "flow": 54.8,
+          "risk": 69.56,
+          "event": 50.0
+        },
+        "decision_stability": {
+          "applied": false,
+          "reason": ""
+        },
+        "relative_rank": 82.75,
+        "action_label": "持有",
+        "rank": 10
       }
+    ]
+  },
+  "portfolio": {
+    "rebalance_frequency": "weekly",
+    "max_cn_positions": 5,
+    "single_theme_cap_pct": 25,
+    "targets": [
+      {
+        "symbol": "512800",
+        "name": "银行ETF华宝",
+        "market": "cn",
+        "target_weight_pct": 13.75
+      },
+      {
+        "symbol": "510650",
+        "name": "金融地产ETF华夏",
+        "market": "cn",
+        "target_weight_pct": 13.75
+      },
+      {
+        "symbol": "515220",
+        "name": "煤炭ETF国泰",
+        "market": "cn",
+        "target_weight_pct": 13.75
+      },
+      {
+        "symbol": "512890",
+        "name": "红利低波ETF华泰柏瑞",
+        "market": "cn",
+        "target_weight_pct": 13.75
+      },
+      {
+        "symbol": "QQQM",
+        "name": "Invesco NASDAQ 100 ETF",
+        "market": "us",
+        "target_weight_pct": 30
+      },
+      {
+        "symbol": "CASH",
+        "name": "现金/货币基金",
+        "market": "cash",
+        "target_weight_pct": 15.0
+      }
+    ],
+    "notes": [
+      "仓位为规则模板，不构成投资建议",
+      "买入候选不足时自动提高现金比例"
     ]
   },
   "disclaimer": "规则化 ETF 研究输出，不构成投资建议。"

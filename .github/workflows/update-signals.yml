@@ -20,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HAS_SERVERCHAN: ${{ secrets.SERVERCHAN_SENDKEY != '' }}
 
     steps:
       - name: Checkout
@@ -38,7 +40,7 @@ jobs:
         run: python scripts/generate_latest.py
 
       - name: Notify ServerChan
-        if: ${{ secrets.SERVERCHAN_SENDKEY != '' }}
+        if: ${{ env.HAS_SERVERCHAN == 'true' }}
         env:
           SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
           SITE_URL: ${{ vars.SITE_URL }}

@@ -1,0 +1,112 @@
+{
+  "updated_at": "2026-08-06",
+  "us": [
+    {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "theme": "Nasdaq 100",
+      "provider": "yfinance",
+      "role": "core"
+    },
+    {
+      "symbol": "QQQM",
+      "name": "Invesco NASDAQ 100 ETF",
+      "theme": "Nasdaq 100",
+      "provider": "yfinance",
+      "role": "core"
+    }
+  ],
+  "cn": [
+    {
+      "symbol": "512880",
+      "name": "证券ETF",
+      "theme": "证券",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "512800",
+      "name": "银行ETF",
+      "theme": "银行",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "510880",
+      "name": "红利ETF",
+      "theme": "红利",
+      "provider": "akshare",
+      "role": "defensive"
+    },
+    {
+      "symbol": "159928",
+      "name": "消费ETF",
+      "theme": "消费",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "512010",
+      "name": "医药ETF",
+      "theme": "医药",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "512760",
+      "name": "芯片ETF",
+      "theme": "芯片",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "512480",
+      "name": "半导体ETF",
+      "theme": "半导体",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "515050",
+      "name": "5GETF",
+      "theme": "通信",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "515790",
+      "name": "光伏ETF",
+      "theme": "光伏",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "516160",
+      "name": "新能源ETF",
+      "theme": "新能源",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "512660",
+      "name": "军工ETF",
+      "theme": "军工",
+      "provider": "akshare",
+      "role": "sector"
+    },
+    {
+      "symbol": "588000",
+      "name": "科创50ETF",
+      "theme": "科创",
+      "provider": "akshare",
+      "role": "broad"
+    },
+    {
+      "symbol": "159915",
+      "name": "创业板ETF",
+      "theme": "创业板",
+      "provider": "akshare",
+      "role": "broad"
+    }
+  ]
+}

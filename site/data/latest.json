@@ -1,0 +1,881 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-06T10:11:44+00:00",
+  "strategy": "etf-regime-rotation-mvp",
+  "regime": {
+    "mode": "defensive",
+    "label": "防守",
+    "average_score": 56.36,
+    "buy_count": 1,
+    "sell_count": 3
+  },
+  "signals": [
+    {
+      "symbol": "510880",
+      "name": "红利ETF",
+      "market": "cn",
+      "theme": "红利",
+      "role": "defensive",
+      "status": "buy",
+      "score": 76.72,
+      "price": 3.288,
+      "change_20d_pct": 8.16,
+      "change_60d_pct": 1.36,
+      "scores": {
+        "trend": 100,
+        "momentum": 69.86,
+        "flow": 65,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "综合评分进入买入候选区",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "长期趋势仍在",
+        "20 日动量为正：8.16%"
+      ],
+      "warnings": [],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "QQQM",
+      "name": "Invesco NASDAQ 100 ETF",
+      "market": "us",
+      "theme": "Nasdaq 100",
+      "role": "core",
+      "status": "hold",
+      "score": 74.58,
+      "price": 295.35,
+      "change_20d_pct": 0.85,
+      "change_60d_pct": 0.98,
+      "scores": {
+        "trend": 100,
+        "momentum": 61.32,
+        "flow": 65,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "长期趋势仍在",
+        "20 日动量为正：0.85%"
+      ],
+      "warnings": [],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "512800",
+      "name": "银行ETF",
+      "market": "cn",
+      "theme": "银行",
+      "role": "sector",
+      "status": "hold",
+      "score": 72.86,
+      "price": 0.805,
+      "change_20d_pct": 5.78,
+      "change_60d_pct": 3.21,
+      "scores": {
+        "trend": 100,
+        "momentum": 66.44,
+        "flow": 50,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "长期趋势仍在",
+        "20 日动量为正：5.78%"
+      ],
+      "warnings": [],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "market": "us",
+      "theme": "Nasdaq 100",
+      "role": "core",
+      "status": "hold",
+      "score": 71.56,
+      "price": 717.3,
+      "change_20d_pct": 0.82,
+      "change_60d_pct": 0.96,
+      "scores": {
+        "trend": 100,
+        "momentum": 61.25,
+        "flow": 50,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "长期趋势仍在",
+        "20 日动量为正：0.82%"
+      ],
+      "warnings": [],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "512010",
+      "name": "医药ETF",
+      "market": "cn",
+      "theme": "医药",
+      "role": "sector",
+      "status": "hold",
+      "score": 70.56,
+      "price": 0.379,
+      "change_20d_pct": 6.46,
+      "change_60d_pct": 2.43,
+      "scores": {
+        "trend": 100,
+        "momentum": 65.22,
+        "flow": 40,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "长期趋势仍在",
+        "20 日动量为正：6.46%"
+      ],
+      "warnings": [
+        "成交量低于 60 日均量，资金确认不足"
+      ],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "159928",
+      "name": "消费ETF",
+      "market": "cn",
+      "theme": "消费",
+      "role": "sector",
+      "status": "hold",
+      "score": 60.09,
+      "price": 0.669,
+      "change_20d_pct": 8.25,
+      "change_60d_pct": -6.95,
+      "scores": {
+        "trend": 70,
+        "momentum": 51.36,
+        "flow": 65,
+        "risk": 55,
+        "event": 50
+      },
+      "reasons": [
+        "趋势尚未破坏，维持持有",
+        "价格站上 20 日均线",
+        "价格站上 60 日均线",
+        "20 日动量为正：8.25%",
+        "成交量高于 60 日均量，资金关注度改善"
+      ],
+      "warnings": [
+        "60 日动量为负：-6.95%",
+        "60 日最大回撤偏大：-16.25%"
+      ],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "512880",
+      "name": "证券ETF",
+      "market": "cn",
+      "theme": "证券",
+      "role": "sector",
+      "status": "watch",
+      "score": 57.19,
+      "price": 1.096,
+      "change_20d_pct": -3.18,
+      "change_60d_pct": 0.09,
+      "scores": {
+        "trend": 70,
+        "momentum": 39.74,
+        "flow": 50,
+        "risk": 75,
+        "event": 50
+      },
+      "reasons": [
+        "信号不足，等待确认",
+        "价格站上 60 日均线"
+      ],
+      "warnings": [
+        "价格未站上 20 日均线"
+      ],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "512760",
+      "name": "芯片ETF",
+      "market": "cn",
+      "theme": "芯片",
+      "role": "sector",
+      "status": "watch",
+      "score": 50.0,
+      "price": null,
+      "change_20d_pct": null,
+      "change_60d_pct": null,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.0,
+        "flow": 50.0,
+        "risk": 50.0,
+        "event": 50.0
+      },
+      "reasons": [
+        "数据不足，保持观察"
+      ],
+      "warnings": [
+        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512760 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+        "历史数据不足，暂不生成交易信号"
+      ],
+      "data_quality": "missing"
+    },
+    {
+      "symbol": "512480",
+      "name": "半导体ETF",
+      "market": "cn",
+      "theme": "半导体",
+      "role": "sector",
+      "status": "watch",
+      "score": 50.0,
+      "price": null,
+      "change_20d_pct": null,
+      "change_60d_pct": null,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.0,
+        "flow": 50.0,
+        "risk": 50.0,
+        "event": 50.0
+      },
+      "reasons": [
+        "数据不足，保持观察"
+      ],
+      "warnings": [
+        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512480 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+        "历史数据不足，暂不生成交易信号"
+      ],
+      "data_quality": "missing"
+    },
+    {
+      "symbol": "515790",
+      "name": "光伏ETF",
+      "market": "cn",
+      "theme": "光伏",
+      "role": "sector",
+      "status": "watch",
+      "score": 50.0,
+      "price": null,
+      "change_20d_pct": null,
+      "change_60d_pct": null,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.0,
+        "flow": 50.0,
+        "risk": 50.0,
+        "event": 50.0
+      },
+      "reasons": [
+        "数据不足，保持观察"
+      ],
+      "warnings": [
+        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.515790 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+        "历史数据不足，暂不生成交易信号"
+      ],
+      "data_quality": "missing"
+    },
+    {
+      "symbol": "516160",
+      "name": "新能源ETF",
+      "market": "cn",
+      "theme": "新能源",
+      "role": "sector",
+      "status": "watch",
+      "score": 50.0,
+      "price": null,
+      "change_20d_pct": null,
+      "change_60d_pct": null,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.0,
+        "flow": 50.0,
+        "risk": 50.0,
+        "event": 50.0
+      },
+      "reasons": [
+        "数据不足，保持观察"
+      ],
+      "warnings": [
+        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.516160 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+        "历史数据不足，暂不生成交易信号"
+      ],
+      "data_quality": "missing"
+    },
+    {
+      "symbol": "588000",
+      "name": "科创50ETF",
+      "market": "cn",
+      "theme": "科创",
+      "role": "broad",
+      "status": "watch",
+      "score": 50.0,
+      "price": null,
+      "change_20d_pct": null,
+      "change_60d_pct": null,
+      "scores": {
+        "trend": 50.0,
+        "momentum": 50.0,
+        "flow": 50.0,
+        "risk": 50.0,
+        "event": 50.0
+      },
+      "reasons": [
+        "数据不足，保持观察"
+      ],
+      "warnings": [
+        "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.588000 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+        "历史数据不足，暂不生成交易信号"
+      ],
+      "data_quality": "missing"
+    },
+    {
+      "symbol": "515050",
+      "name": "5GETF",
+      "market": "cn",
+      "theme": "通信",
+      "role": "sector",
+      "status": "sell",
+      "score": 39.93,
+      "price": 1.014,
+      "change_20d_pct": -20.9,
+      "change_60d_pct": -12.28,
+      "scores": {
+        "trend": 50,
+        "momentum": 27.72,
+        "flow": 50,
+        "risk": 20,
+        "event": 50
+      },
+      "reasons": [
+        "趋势或综合评分触发卖出/回避",
+        "长期趋势仍在"
+      ],
+      "warnings": [
+        "价格未站上 20 日均线",
+        "价格未站上 60 日均线",
+        "60 日动量为负：-12.28%",
+        "20 日最大回撤偏大：-28.66%",
+        "60 日最大回撤偏大：-38.78%"
+      ],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "159915",
+      "name": "创业板ETF",
+      "market": "cn",
+      "theme": "创业板",
+      "role": "broad",
+      "status": "sell",
+      "score": 38.28,
+      "price": 3.54,
+      "change_20d_pct": -12.38,
+      "change_60d_pct": -12.55,
+      "scores": {
+        "trend": 50,
+        "momentum": 21.14,
+        "flow": 50,
+        "risk": 20,
+        "event": 50
+      },
+      "reasons": [
+        "趋势或综合评分触发卖出/回避",
+        "长期趋势仍在"
+      ],
+      "warnings": [
+        "价格未站上 20 日均线",
+        "价格未站上 60 日均线",
+        "60 日动量为负：-12.55%",
+        "20 日最大回撤偏大：-15.44%",
+        "60 日最大回撤偏大：-25.60%"
+      ],
+      "data_quality": "real"
+    },
+    {
+      "symbol": "512660",
+      "name": "军工ETF",
+      "market": "cn",
+      "theme": "军工",
+      "role": "sector",
+      "status": "sell",
+      "score": 33.66,
+      "price": 1.135,
+      "change_20d_pct": -8.69,
+      "change_60d_pct": -23.72,
+      "scores": {
+        "trend": 50,
+        "momentum": 2.62,
+        "flow": 50,
+        "risk": 20,
+        "event": 50
+      },
+      "reasons": [
+        "趋势或综合评分触发卖出/回避",
+        "价格站上 20 日均线"
+      ],
+      "warnings": [
+        "价格未站上 60 日均线",
+        "60 日动量为负：-23.72%",
+        "20 日最大回撤偏大：-17.64%",
+        "60 日最大回撤偏大：-25.65%",
+        "年化波动率偏高：43.35%"
+      ],
+      "data_quality": "real"
+    }
+  ],
+  "summary": {
+    "buy": [
+      {
+        "symbol": "510880",
+        "name": "红利ETF",
+        "market": "cn",
+        "theme": "红利",
+        "role": "defensive",
+        "status": "buy",
+        "score": 76.72,
+        "price": 3.288,
+        "change_20d_pct": 8.16,
+        "change_60d_pct": 1.36,
+        "scores": {
+          "trend": 100,
+          "momentum": 69.86,
+          "flow": 65,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "综合评分进入买入候选区",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "长期趋势仍在",
+          "20 日动量为正：8.16%"
+        ],
+        "warnings": [],
+        "data_quality": "real"
+      }
+    ],
+    "sell": [
+      {
+        "symbol": "515050",
+        "name": "5GETF",
+        "market": "cn",
+        "theme": "通信",
+        "role": "sector",
+        "status": "sell",
+        "score": 39.93,
+        "price": 1.014,
+        "change_20d_pct": -20.9,
+        "change_60d_pct": -12.28,
+        "scores": {
+          "trend": 50,
+          "momentum": 27.72,
+          "flow": 50,
+          "risk": 20,
+          "event": 50
+        },
+        "reasons": [
+          "趋势或综合评分触发卖出/回避",
+          "长期趋势仍在"
+        ],
+        "warnings": [
+          "价格未站上 20 日均线",
+          "价格未站上 60 日均线",
+          "60 日动量为负：-12.28%",
+          "20 日最大回撤偏大：-28.66%",
+          "60 日最大回撤偏大：-38.78%"
+        ],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "159915",
+        "name": "创业板ETF",
+        "market": "cn",
+        "theme": "创业板",
+        "role": "broad",
+        "status": "sell",
+        "score": 38.28,
+        "price": 3.54,
+        "change_20d_pct": -12.38,
+        "change_60d_pct": -12.55,
+        "scores": {
+          "trend": 50,
+          "momentum": 21.14,
+          "flow": 50,
+          "risk": 20,
+          "event": 50
+        },
+        "reasons": [
+          "趋势或综合评分触发卖出/回避",
+          "长期趋势仍在"
+        ],
+        "warnings": [
+          "价格未站上 20 日均线",
+          "价格未站上 60 日均线",
+          "60 日动量为负：-12.55%",
+          "20 日最大回撤偏大：-15.44%",
+          "60 日最大回撤偏大：-25.60%"
+        ],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "512660",
+        "name": "军工ETF",
+        "market": "cn",
+        "theme": "军工",
+        "role": "sector",
+        "status": "sell",
+        "score": 33.66,
+        "price": 1.135,
+        "change_20d_pct": -8.69,
+        "change_60d_pct": -23.72,
+        "scores": {
+          "trend": 50,
+          "momentum": 2.62,
+          "flow": 50,
+          "risk": 20,
+          "event": 50
+        },
+        "reasons": [
+          "趋势或综合评分触发卖出/回避",
+          "价格站上 20 日均线"
+        ],
+        "warnings": [
+          "价格未站上 60 日均线",
+          "60 日动量为负：-23.72%",
+          "20 日最大回撤偏大：-17.64%",
+          "60 日最大回撤偏大：-25.65%",
+          "年化波动率偏高：43.35%"
+        ],
+        "data_quality": "real"
+      }
+    ],
+    "watch": [
+      {
+        "symbol": "512880",
+        "name": "证券ETF",
+        "market": "cn",
+        "theme": "证券",
+        "role": "sector",
+        "status": "watch",
+        "score": 57.19,
+        "price": 1.096,
+        "change_20d_pct": -3.18,
+        "change_60d_pct": 0.09,
+        "scores": {
+          "trend": 70,
+          "momentum": 39.74,
+          "flow": 50,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "信号不足，等待确认",
+          "价格站上 60 日均线"
+        ],
+        "warnings": [
+          "价格未站上 20 日均线"
+        ],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "512760",
+        "name": "芯片ETF",
+        "market": "cn",
+        "theme": "芯片",
+        "role": "sector",
+        "status": "watch",
+        "score": 50.0,
+        "price": null,
+        "change_20d_pct": null,
+        "change_60d_pct": null,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.0,
+          "flow": 50.0,
+          "risk": 50.0,
+          "event": 50.0
+        },
+        "reasons": [
+          "数据不足，保持观察"
+        ],
+        "warnings": [
+          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512760 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+          "历史数据不足，暂不生成交易信号"
+        ],
+        "data_quality": "missing"
+      },
+      {
+        "symbol": "512480",
+        "name": "半导体ETF",
+        "market": "cn",
+        "theme": "半导体",
+        "role": "sector",
+        "status": "watch",
+        "score": 50.0,
+        "price": null,
+        "change_20d_pct": null,
+        "change_60d_pct": null,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.0,
+          "flow": 50.0,
+          "risk": 50.0,
+          "event": 50.0
+        },
+        "reasons": [
+          "数据不足，保持观察"
+        ],
+        "warnings": [
+          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.512480 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+          "历史数据不足，暂不生成交易信号"
+        ],
+        "data_quality": "missing"
+      },
+      {
+        "symbol": "515790",
+        "name": "光伏ETF",
+        "market": "cn",
+        "theme": "光伏",
+        "role": "sector",
+        "status": "watch",
+        "score": 50.0,
+        "price": null,
+        "change_20d_pct": null,
+        "change_60d_pct": null,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.0,
+          "flow": 50.0,
+          "risk": 50.0,
+          "event": 50.0
+        },
+        "reasons": [
+          "数据不足，保持观察"
+        ],
+        "warnings": [
+          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.515790 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+          "历史数据不足，暂不生成交易信号"
+        ],
+        "data_quality": "missing"
+      },
+      {
+        "symbol": "516160",
+        "name": "新能源ETF",
+        "market": "cn",
+        "theme": "新能源",
+        "role": "sector",
+        "status": "watch",
+        "score": 50.0,
+        "price": null,
+        "change_20d_pct": null,
+        "change_60d_pct": null,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.0,
+          "flow": 50.0,
+          "risk": 50.0,
+          "event": 50.0
+        },
+        "reasons": [
+          "数据不足，保持观察"
+        ],
+        "warnings": [
+          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.516160 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+          "历史数据不足，暂不生成交易信号"
+        ],
+        "data_quality": "missing"
+      },
+      {
+        "symbol": "588000",
+        "name": "科创50ETF",
+        "market": "cn",
+        "theme": "科创",
+        "role": "broad",
+        "status": "watch",
+        "score": 50.0,
+        "price": null,
+        "change_20d_pct": null,
+        "change_60d_pct": null,
+        "scores": {
+          "trend": 50.0,
+          "momentum": 50.0,
+          "flow": 50.0,
+          "risk": 50.0,
+          "event": 50.0
+        },
+        "reasons": [
+          "数据不足，保持观察"
+        ],
+        "warnings": [
+          "数据源失败：ProxyError: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt/stock/kline/get?fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5%2Cf6&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58%2Cf59%2Cf60%2Cf61%2Cf116&ut=7eea3edcaed734bea9cbfc24409ed989&klt=101&fqt=1&beg=20240408&end=20260806&secid=1.588000 (Caused by ProxyError('Unable to connect to proxy', RemoteDisconnected('Remote end closed connection without response')))",
+          "历史数据不足，暂不生成交易信号"
+        ],
+        "data_quality": "missing"
+      }
+    ],
+    "hold": [
+      {
+        "symbol": "QQQM",
+        "name": "Invesco NASDAQ 100 ETF",
+        "market": "us",
+        "theme": "Nasdaq 100",
+        "role": "core",
+        "status": "hold",
+        "score": 74.58,
+        "price": 295.35,
+        "change_20d_pct": 0.85,
+        "change_60d_pct": 0.98,
+        "scores": {
+          "trend": 100,
+          "momentum": 61.32,
+          "flow": 65,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "长期趋势仍在",
+          "20 日动量为正：0.85%"
+        ],
+        "warnings": [],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "512800",
+        "name": "银行ETF",
+        "market": "cn",
+        "theme": "银行",
+        "role": "sector",
+        "status": "hold",
+        "score": 72.86,
+        "price": 0.805,
+        "change_20d_pct": 5.78,
+        "change_60d_pct": 3.21,
+        "scores": {
+          "trend": 100,
+          "momentum": 66.44,
+          "flow": 50,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "长期趋势仍在",
+          "20 日动量为正：5.78%"
+        ],
+        "warnings": [],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "QQQ",
+        "name": "Invesco QQQ Trust",
+        "market": "us",
+        "theme": "Nasdaq 100",
+        "role": "core",
+        "status": "hold",
+        "score": 71.56,
+        "price": 717.3,
+        "change_20d_pct": 0.82,
+        "change_60d_pct": 0.96,
+        "scores": {
+          "trend": 100,
+          "momentum": 61.25,
+          "flow": 50,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "长期趋势仍在",
+          "20 日动量为正：0.82%"
+        ],
+        "warnings": [],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "512010",
+        "name": "医药ETF",
+        "market": "cn",
+        "theme": "医药",
+        "role": "sector",
+        "status": "hold",
+        "score": 70.56,
+        "price": 0.379,
+        "change_20d_pct": 6.46,
+        "change_60d_pct": 2.43,
+        "scores": {
+          "trend": 100,
+          "momentum": 65.22,
+          "flow": 40,
+          "risk": 75,
+          "event": 50
+        },
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "长期趋势仍在",
+          "20 日动量为正：6.46%"
+        ],
+        "warnings": [
+          "成交量低于 60 日均量，资金确认不足"
+        ],
+        "data_quality": "real"
+      },
+      {
+        "symbol": "159928",
+        "name": "消费ETF",
+        "market": "cn",
+        "theme": "消费",
+        "role": "sector",
+        "status": "hold",
+        "score": 60.09,
+        "price": 0.669,
+        "change_20d_pct": 8.25,
+        "change_60d_pct": -6.95,
+        "scores": {
+          "trend": 70,
+          "momentum": 51.36,
+          "flow": 65,
+          "risk": 55,
+          "event": 50
+        },
+        "reasons": [
+          "趋势尚未破坏，维持持有",
+          "价格站上 20 日均线",
+          "价格站上 60 日均线",
+          "20 日动量为正：8.25%",
+          "成交量高于 60 日均量，资金关注度改善"
+        ],
+        "warnings": [
+          "60 日动量为负：-6.95%",
+          "60 日最大回撤偏大：-16.25%"
+        ],
+        "data_quality": "real"
+      }
+    ]
+  },
+  "disclaimer": "规则化 ETF 研究输出，不构成投资建议。"
+}

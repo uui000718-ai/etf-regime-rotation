@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -28,6 +29,7 @@ from scripts.generate_latest import (  # noqa: E402
 REPORT_DIR = ROOT / "reports" / "backtests"
 DEFAULT_LOOKBACK_DAYS = 30
 DEFAULT_COST_BPS = 5.0
+DEFAULT_CAPITAL = 10000.0
 
 
 def date_to_str(value: pd.Timestamp) -> str:
@@ -147,7 +149,70 @@ def benchmark_return(price_panel: pd.DataFrame, symbols: list[str], start: pd.Ti
     return float(returns.mean() * 100)
 
 
-def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = DEFAULT_COST_BPS) -> dict[str, Any]:
+def enrich_targets_with_amounts(targets: list[dict[str, Any]], account_value: float) -> list[dict[str, Any]]:
+    enriched: list[dict[str, Any]] = []
+    for item in targets:
+        weight = float(item["target_weight_pct"])
+        enriched.append({**item, "target_amount_yuan": round(account_value * weight / 100, 2)})
+    return enriched
+
+
+def monthly_allocations(trade_log: list[dict[str, Any]]) -> dict[str, Any]:
+    months: dict[str, Any] = {}
+    for trade in trade_log:
+        month = trade["trade_date"][:7]
+        bucket = months.setdefault(month, {"unique_etfs": [], "rebalances": []})
+        etfs = [item for item in trade["targets"] if item["symbol"] != "CASH"]
+        for item in etfs:
+            if item["symbol"] not in bucket["unique_etfs"]:
+                bucket["unique_etfs"].append(item["symbol"])
+        bucket["rebalances"].append(
+            {
+                "signal_date": trade["signal_date"],
+                "trade_date": trade["trade_date"],
+                "targets": etfs,
+            }
+        )
+    return months
+
+
+def monthly_performance(equity_curve: list[dict[str, Any]], period_start: pd.Timestamp, period_end: pd.Timestamp) -> dict[str, Any]:
+    if not equity_curve:
+        return {}
+    curve = pd.DataFrame(equity_curve)
+    curve["date"] = pd.to_datetime(curve["date"])
+    months = sorted(curve["date"].dt.strftime("%Y-%m").unique())
+    performance: dict[str, Any] = {}
+    for month in months:
+        month_start = pd.Timestamp(f"{month}-01")
+        if month == date_to_str(period_start)[:7]:
+            start_boundary = period_start
+        else:
+            start_boundary = month_start - pd.Timedelta(days=1)
+        month_end = min(month_start + pd.offsets.MonthEnd(0), period_end)
+
+        start_rows = curve[curve["date"] <= start_boundary]
+        end_rows = curve[curve["date"] <= month_end]
+        if start_rows.empty or end_rows.empty:
+            continue
+        start_value = float(start_rows.iloc[-1]["account_value_yuan"])
+        end_value = float(end_rows.iloc[-1]["account_value_yuan"])
+        performance[month] = {
+            "start_value_yuan": round(start_value, 2),
+            "end_value_yuan": round(end_value, 2),
+            "profit_loss_yuan": round(end_value - start_value, 2),
+            "return_pct": round((end_value / start_value - 1) * 100, 2) if start_value else None,
+        }
+    return performance
+
+
+def run_backtest(
+    lookback_days: int | None = DEFAULT_LOOKBACK_DAYS,
+    cost_bps: float = DEFAULT_COST_BPS,
+    capital: float = DEFAULT_CAPITAL,
+    start_date: str | None = None,
+    end_date: str | None = None,
+) -> dict[str, Any]:
     universe = load_universe()
     cn_names = fetch_cn_quote_names([item["symbol"] for item in universe.get("cn", [])])
 
@@ -161,31 +226,26 @@ def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = D
     if price_panel.empty:
         raise RuntimeError("No price data available for backtest.")
 
-    end_date = price_panel.index.max()
-    start_date = end_date - pd.Timedelta(days=lookback_days)
-    signal_dates = weekly_signal_dates(price_panel, start_date, end_date)
+    final_date = pd.Timestamp(end_date) if end_date else price_panel.index.max()
+    first_date = pd.Timestamp(start_date) if start_date else final_date - pd.Timedelta(days=lookback_days or DEFAULT_LOOKBACK_DAYS)
+    signal_start = first_date - pd.Timedelta(days=7)
+    signal_dates = weekly_signal_dates(price_panel, signal_start, final_date)
 
     schedules: dict[pd.Timestamp, dict[str, Any]] = {}
-    trade_log: list[dict[str, Any]] = []
     for signal_date in signal_dates:
         trade_date = next_trading_date(price_panel, signal_date)
-        if trade_date is None or trade_date > end_date:
+        if trade_date is None or trade_date < first_date or trade_date > final_date:
             continue
         signals = signals_for_date(signal_date, universe, histories, cn_names)
         portfolio = build_portfolio(signals)
-        weights = as_weight_map(portfolio)
         schedules[trade_date] = {
             "signal_date": signal_date,
             "trade_date": trade_date,
-            "weights": weights,
+            "weights": as_weight_map(portfolio),
             "portfolio": portfolio,
             "regime": market_regime(signals),
             "buys": [
-                {
-                    "symbol": item["symbol"],
-                    "name": item["name"],
-                    "score": item["score"],
-                }
+                {"symbol": item["symbol"], "name": item["name"], "score": item["score"]}
                 for item in signals
                 if item["market"] == "cn" and item["status"] == "buy"
             ][:5],
@@ -194,13 +254,16 @@ def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = D
     if not schedules:
         raise RuntimeError("No rebalance schedule generated.")
 
-    first_trade_date = min(schedules)
-    dates = [date for date in price_panel.index if first_trade_date <= date <= end_date]
+    period_start = min([date for date in price_panel.index if date >= first_date])
+    period_end = max([date for date in price_panel.index if date <= final_date])
+    dates = [date for date in price_panel.index if period_start <= date <= period_end]
     current_weights: dict[str, float] = {"CASH": 1.0}
     value = 1.0
-    total_cost = 0.0
+    total_cost_pct = 0.0
+    total_cost_amount = 0.0
     equity_curve: list[dict[str, Any]] = []
     daily_returns: list[float] = []
+    trade_log: list[dict[str, Any]] = []
     previous_date: pd.Timestamp | None = None
 
     for date in dates:
@@ -220,38 +283,51 @@ def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = D
             scheduled = schedules[date]
             new_weights = scheduled["weights"]
             trade_turnover = turnover(current_weights, new_weights)
-            cost = trade_turnover * cost_bps / 10000
-            value *= 1 - cost
-            total_cost += cost
+            cost_pct = trade_turnover * cost_bps / 10000
+            cost_amount = value * capital * cost_pct
+            value *= 1 - cost_pct
+            total_cost_pct += cost_pct
+            total_cost_amount += cost_amount
             current_weights = new_weights
+            account_value = value * capital
             trade_log.append(
                 {
                     "signal_date": date_to_str(scheduled["signal_date"]),
                     "trade_date": date_to_str(date),
                     "turnover_pct": round(trade_turnover * 100, 2),
-                    "cost_pct": round(cost * 100, 4),
+                    "cost_pct": round(cost_pct * 100, 4),
+                    "cost_amount_yuan": round(cost_amount, 2),
+                    "account_value_yuan": round(account_value, 2),
                     "regime": scheduled["regime"],
-                    "targets": scheduled["portfolio"]["targets"],
+                    "targets": enrich_targets_with_amounts(scheduled["portfolio"]["targets"], account_value),
                     "cn_buys": scheduled["buys"],
                 }
             )
 
-        equity_curve.append({"date": date_to_str(date), "value": round(value, 6), "daily_return_pct": round(day_return * 100, 4)})
+        equity_curve.append(
+            {
+                "date": date_to_str(date),
+                "value": round(value, 6),
+                "account_value_yuan": round(value * capital, 2),
+                "daily_return_pct": round(day_return * 100, 4),
+            }
+        )
         previous_date = date
 
     cn_symbols = [item["symbol"] for item in universe.get("cn", [])]
     us_symbols = [item["symbol"] for item in universe.get("us", [])]
-    period_start = first_trade_date
-    period_end = dates[-1]
-
     cn_benchmark = benchmark_return(price_panel, cn_symbols, period_start, period_end)
     us_benchmark = benchmark_return(price_panel, us_symbols, period_start, period_end)
+    final_value = capital * value
 
-    result = {
+    return {
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "strategy": "etf-regime-rotation-v2",
         "assumptions": {
             "lookback_days": lookback_days,
+            "start_date": start_date,
+            "end_date": end_date,
+            "initial_capital_yuan": capital,
             "rebalance": "weekly",
             "execution": "signals are generated after close and executed at next available close",
             "cash_return": "0%",
@@ -264,9 +340,12 @@ def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = D
         },
         "metrics": {
             "total_return_pct": round((value - 1) * 100, 2),
+            "profit_loss_yuan": round(final_value - capital, 2),
+            "final_value_yuan": round(final_value, 2),
             "max_drawdown_pct": round(max_drawdown([row["value"] for row in equity_curve]), 2),
             "annualized_volatility_pct": round(annualized_volatility(daily_returns), 2),
-            "transaction_cost_pct": round(total_cost * 100, 4),
+            "transaction_cost_pct": round(total_cost_pct * 100, 4),
+            "transaction_cost_yuan": round(total_cost_amount, 2),
             "rebalance_count": len(trade_log),
         },
         "benchmarks": {
@@ -274,54 +353,90 @@ def run_backtest(lookback_days: int = DEFAULT_LOOKBACK_DAYS, cost_bps: float = D
             "nasdaq_core_equal_weight_pct": None if us_benchmark is None else round(us_benchmark, 2),
         },
         "latest_targets": trade_log[-1]["targets"] if trade_log else [],
+        "monthly_allocations": monthly_allocations(trade_log),
+        "monthly_performance": monthly_performance(equity_curve, period_start, period_end),
         "trade_log": trade_log,
         "equity_curve": equity_curve,
         "disclaimer": "Rule-based ETF research backtest. It is not investment advice.",
     }
-    return result
 
 
-def write_report(result: dict[str, Any]) -> None:
+def write_report(result: dict[str, Any], output_name: str = "last_month_backtest") -> None:
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
-    json_path = REPORT_DIR / "last_month_backtest.json"
-    md_path = REPORT_DIR / "last_month_backtest.md"
+    json_path = REPORT_DIR / f"{output_name}.json"
+    md_path = REPORT_DIR / f"{output_name}.md"
     json_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 
     metrics = result["metrics"]
     benchmarks = result["benchmarks"]
     period = result["period"]
     latest_targets = "\n".join(
-        f"- {item['symbol']} {item['name']}: {item['target_weight_pct']}%"
+        f"- {item['symbol']} {item['name']}: {item['target_weight_pct']}%, {item['target_amount_yuan']} yuan"
         for item in result.get("latest_targets", [])
+    )
+    monthly_sections = []
+    for month in sorted(result.get("monthly_allocations", {})):
+        bucket = result["monthly_allocations"][month]
+        rebalance_rows = []
+        for item in bucket["rebalances"]:
+            target_text = ", ".join(
+                f"{target['symbol']} {target['target_weight_pct']}%"
+                for target in item["targets"]
+            )
+            rebalance_rows.append(f"- {item['trade_date']}: {target_text or 'no ETF position'}")
+        monthly_sections.append(
+            f"### {month}\n\n"
+            f"- ETFs used in month: {', '.join(bucket['unique_etfs']) or 'none'}\n"
+            + "\n".join(rebalance_rows)
+        )
+    monthly_text = "\n\n".join(monthly_sections)
+    monthly_perf = "\n".join(
+        f"| {month} | {item['start_value_yuan']} | {item['end_value_yuan']} | "
+        f"{item['profit_loss_yuan']} | {item['return_pct']}% |"
+        for month, item in sorted(result.get("monthly_performance", {}).items())
     )
     trades = "\n".join(
         f"| {item['signal_date']} | {item['trade_date']} | {item['turnover_pct']} | "
-        f"{item['cost_pct']} | {item['regime']['label']} | "
-        f"{', '.join(target['symbol'] for target in item['targets'])} |"
+        f"{item['cost_pct']} | {item['cost_amount_yuan']} | {item['account_value_yuan']} | "
+        f"{item['regime']['label']} | {', '.join(target['symbol'] for target in item['targets'])} |"
         for item in result.get("trade_log", [])
     )
-    body = f"""# ETF 轮动策略近一月回测
 
-- 回测区间：{period['start']} 至 {period['end']}
-- 策略收益：{metrics['total_return_pct']}%
-- 最大回撤：{metrics['max_drawdown_pct']}%
-- 年化波动率：{metrics['annualized_volatility_pct']}%
-- 交易成本估算：{metrics['transaction_cost_pct']}%
-- 调仓次数：{metrics['rebalance_count']}
-- A股ETF等权基准：{benchmarks['cn_equal_weight_universe_pct']}%
-- 纳指核心等权基准：{benchmarks['nasdaq_core_equal_weight_pct']}%
+    body = f"""# ETF Rotation Strategy Backtest
 
-## 最新目标仓位
+- Period: {period['start']} to {period['end']}
+- Initial capital: {result['assumptions']['initial_capital_yuan']} yuan
+- Final value: {metrics['final_value_yuan']} yuan
+- Total return: {metrics['total_return_pct']}%
+- Profit/loss: {metrics['profit_loss_yuan']} yuan
+- Max drawdown: {metrics['max_drawdown_pct']}%
+- Annualized volatility: {metrics['annualized_volatility_pct']}%
+- Estimated transaction cost: {metrics['transaction_cost_pct']}%, about {metrics['transaction_cost_yuan']} yuan
+- Rebalances: {metrics['rebalance_count']}
+- CN ETF equal-weight benchmark: {benchmarks['cn_equal_weight_universe_pct']}%
+- Nasdaq core equal-weight benchmark: {benchmarks['nasdaq_core_equal_weight_pct']}%
+
+## Latest Targets
 
 {latest_targets}
 
-## 调仓记录
+## Monthly Buy/Hold Plan
 
-| 信号日 | 执行日 | 换手率% | 成本% | 市场状态 | 目标 |
-| --- | --- | ---: | ---: | --- | --- |
+{monthly_text}
+
+## Monthly Performance
+
+| Month | Start yuan | End yuan | P/L yuan | Return |
+| --- | ---: | ---: | ---: | ---: |
+{monthly_perf}
+
+## Rebalance Log
+
+| Signal date | Trade date | Turnover % | Cost % | Cost yuan | Account yuan | Regime | Targets |
+| --- | --- | ---: | ---: | ---: | ---: | --- | --- |
 {trades}
 
-说明：信号按收盘后生成、下一可交易日收盘执行；现金收益按 0；交易成本按单边换手 5bp 估算。本报告不构成投资建议。
+Notes: signals are generated after close and executed at the next available close. Cash return is 0. Transaction cost uses {result['assumptions']['transaction_cost_bps_per_turnover']} bps of ETF turnover. This is not investment advice.
 """
     md_path.write_text(body, encoding="utf-8")
     print(f"Wrote {json_path}")
@@ -329,8 +444,23 @@ def write_report(result: dict[str, Any]) -> None:
 
 
 def main() -> None:
-    result = run_backtest()
-    write_report(result)
+    parser = argparse.ArgumentParser(description="Backtest the ETF regime rotation strategy.")
+    parser.add_argument("--lookback-days", type=int, default=DEFAULT_LOOKBACK_DAYS)
+    parser.add_argument("--start", dest="start_date")
+    parser.add_argument("--end", dest="end_date")
+    parser.add_argument("--capital", type=float, default=DEFAULT_CAPITAL)
+    parser.add_argument("--cost-bps", type=float, default=DEFAULT_COST_BPS)
+    parser.add_argument("--output", default="last_month_backtest")
+    args = parser.parse_args()
+
+    result = run_backtest(
+        lookback_days=args.lookback_days,
+        cost_bps=args.cost_bps,
+        capital=args.capital,
+        start_date=args.start_date,
+        end_date=args.end_date,
+    )
+    write_report(result, args.output)
 
 
 if __name__ == "__main__":
